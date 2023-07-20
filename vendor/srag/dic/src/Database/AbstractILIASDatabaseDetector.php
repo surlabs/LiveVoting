@@ -33,7 +33,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    static function getReservedWords()
+    static function getReservedWords(): array
     {
         // TODO
         return [];
