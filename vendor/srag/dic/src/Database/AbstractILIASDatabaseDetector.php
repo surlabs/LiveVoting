@@ -43,7 +43,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public static function isReservedWord($a_word)
+    public static function isReservedWord($a_word):bool
     {
         // TODO
         return false;
