@@ -42,7 +42,7 @@ interface PluginInterface
     /**
      *
      */
-    public function reloadDatabase() : void;
+    //function reloadDatabase() : void;
 
 
     /**

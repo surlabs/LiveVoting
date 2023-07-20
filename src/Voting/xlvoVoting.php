@@ -36,7 +36,7 @@ class xlvoVoting extends CachingActiveRecord
     /**
      * @return string
      */
-    public function getConnectorContainerName()
+    public function getConnectorContainerName(): string
     {
         return self::TABLE_NAME;
     }
@@ -46,7 +46,7 @@ class xlvoVoting extends CachingActiveRecord
      * @return string
      * @deprecated
      */
-    public static function returnDbTableName()
+    public static function returnDbTableName(): string
     {
         return self::TABLE_NAME;
     }
@@ -305,7 +305,7 @@ class xlvoVoting extends CachingActiveRecord
     /**
      *
      */
-    public function create()
+    public function create(): void
     {
         $res = self::dic()->database()->query('SELECT MAX(position) AS max FROM ' . self::TABLE_NAME . ' WHERE obj_id = ' . self::dic()->database()
                 ->quote($this->getObjId(), 'integer'));
@@ -417,7 +417,7 @@ class xlvoVoting extends CachingActiveRecord
     /**
      * @throws arException
      */
-    public function afterObjectLoad()
+    public function afterObjectLoad(): void
     {
         /**
          * @var xlvoOption[] $xlvoOptions

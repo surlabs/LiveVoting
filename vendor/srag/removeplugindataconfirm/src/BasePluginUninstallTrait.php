@@ -21,13 +21,13 @@ trait BasePluginUninstallTrait
     /**
      * @inheritDoc
      */
-    public function updateDatabase() : bool
+    public function updateDatabase() : int
     {
         if ($this->shouldUseOneUpdateStepOnly()) {
             $this->writeDBVersion(0);
         }
 
-        return parent::updateDatabase();
+        return (int) parent::updateDatabase();
     }
 
 

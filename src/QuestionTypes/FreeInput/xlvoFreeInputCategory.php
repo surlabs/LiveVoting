@@ -30,7 +30,7 @@ class xlvoFreeInputCategory extends CachingActiveRecord
      * @return string
      * @deprecated
      */
-    public static function returnDbTableName()
+    public static function returnDbTableName(): string
     {
         return self::TABLE_NAME;
     }

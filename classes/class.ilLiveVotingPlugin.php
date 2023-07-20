@@ -30,6 +30,10 @@ class ilLiveVotingPlugin extends ilRepositoryObjectPlugin
 
     use RepositoryObjectPluginUninstallTrait;
     use LiveVotingTrait;
+
+    protected ?ilPlugin $plugin = null;
+    protected ilComponentFactory $component_factory;
+
     const PLUGIN_ID = 'xlvo';
     const PLUGIN_NAME = 'LiveVoting';
     const PLUGIN_CLASS_NAME = self::class;
@@ -54,18 +58,9 @@ class ilLiveVotingPlugin extends ilRepositoryObjectPlugin
 
 
     /**
-     *
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-
-    /**
      * @return string
      */
-    public function getPluginName()
+    public function getPluginName(): string
     {
         return self::PLUGIN_NAME;
     }
@@ -74,7 +69,7 @@ class ilLiveVotingPlugin extends ilRepositoryObjectPlugin
     /**
      * @return bool
      */
-    public function allowCopy()
+    public function allowCopy(): bool
     {
         return true;
     }
@@ -103,5 +98,10 @@ class ilLiveVotingPlugin extends ilRepositoryObjectPlugin
     protected function shouldUseOneUpdateStepOnly() : bool
     {
         return false;
+    }
+
+    protected function initType(): void
+    {
+        $this->type = 'cld';
     }
 }

@@ -56,7 +56,7 @@ class arConnectorCache extends arConnector
      *
      * @return mixed
      */
-    public function checkConnection(ActiveRecord $ar)
+    public function checkConnection(ActiveRecord $ar): bool
     {
         return $this->arConnectorDB->checkConnection($ar);
     }
@@ -68,7 +68,7 @@ class arConnectorCache extends arConnector
      *
      * @return bool
      */
-    public function installDatabase(ActiveRecord $ar, $fields)
+    public function installDatabase(ActiveRecord $ar, $fields): bool
     {
         return $this->arConnectorDB->installDatabase($ar, $fields);
     }
@@ -79,7 +79,7 @@ class arConnectorCache extends arConnector
      *
      * @return bool
      */
-    public function updateDatabase(ActiveRecord $ar)
+    public function updateDatabase(ActiveRecord $ar): bool
     {
         return $this->arConnectorDB->updateDatabase($ar);
     }
@@ -90,7 +90,7 @@ class arConnectorCache extends arConnector
      *
      * @return true
      */
-    public function resetDatabase(ActiveRecord $ar)
+    public function resetDatabase(ActiveRecord $ar): bool
     {
         return $this->arConnectorDB->resetDatabase($ar);
     }
@@ -101,7 +101,7 @@ class arConnectorCache extends arConnector
      *
      * @return void
      */
-    public function truncateDatabase(ActiveRecord $ar)
+    public function truncateDatabase(ActiveRecord $ar): bool
     {
         $this->arConnectorDB->truncateDatabase($ar);
     }
@@ -113,7 +113,7 @@ class arConnectorCache extends arConnector
      * @return mixed
      *
      */
-    public function checkTableExists(ActiveRecord $ar)
+    public function checkTableExists(ActiveRecord $ar): bool
     {
         return $this->arConnectorDB->checkTableExists($ar);
     }
@@ -125,7 +125,7 @@ class arConnectorCache extends arConnector
      *
      * @return mixed
      */
-    public function checkFieldExists(ActiveRecord $ar, $field_name)
+    public function checkFieldExists(ActiveRecord $ar, $field_name): bool
     {
         return $this->arConnectorDB->checkFieldExists($ar, $field_name);
     }
@@ -138,7 +138,7 @@ class arConnectorCache extends arConnector
      * @return bool
      * @throws arException
      */
-    public function removeField(ActiveRecord $ar, $field_name)
+    public function removeField(ActiveRecord $ar, $field_name): bool
     {
         return $this->arConnectorDB->removeField($ar, $field_name);
     }
@@ -152,7 +152,7 @@ class arConnectorCache extends arConnector
      * @return bool
      * @throws arException
      */
-    public function renameField(ActiveRecord $ar, $old_name, $new_name)
+    public function renameField(ActiveRecord $ar, $old_name, $new_name): bool
     {
         return $this->arConnectorDB->renameField($ar, $old_name, $new_name);
     }
@@ -163,7 +163,7 @@ class arConnectorCache extends arConnector
      *
      * @return void
      */
-    public function create(ActiveRecord $ar)
+    public function create(ActiveRecord $ar): void
     {
         $this->arConnectorDB->create($ar);
         $this->storeActiveRecordInCache($ar);
@@ -175,7 +175,7 @@ class arConnectorCache extends arConnector
      *
      * @return array
      */
-    public function read(ActiveRecord $ar)
+    public function read(ActiveRecord $ar): array
     {
         if ($this->cache->isActive()) {
             $key = $ar->getConnectorContainerName() . "_" . $ar->getPrimaryFieldValue();
@@ -206,7 +206,7 @@ class arConnectorCache extends arConnector
      *
      * @return void
      */
-    public function update(ActiveRecord $ar)
+    public function update(ActiveRecord $ar): void
     {
         $this->arConnectorDB->update($ar);
         $this->storeActiveRecordInCache($ar);
@@ -218,7 +218,7 @@ class arConnectorCache extends arConnector
      *
      * @return void
      */
-    public function delete(ActiveRecord $ar)
+    public function delete(ActiveRecord $ar): void
     {
         $this->arConnectorDB->delete($ar);
 
@@ -234,7 +234,7 @@ class arConnectorCache extends arConnector
      *
      * @return mixed
      */
-    public function readSet(ActiveRecordList $arl)
+    public function readSet(ActiveRecordList $arl): array
     {
         return $this->arConnectorDB->readSet($arl);
     }
@@ -245,7 +245,7 @@ class arConnectorCache extends arConnector
      *
      * @return int
      */
-    public function affectedRows(ActiveRecordList $arl)
+    public function affectedRows(ActiveRecordList $arl): int
     {
         return $this->arConnectorDB->affectedRows($arl);
     }
@@ -257,7 +257,7 @@ class arConnectorCache extends arConnector
      *
      * @return string
      */
-    public function quote($value, $type)
+    public function quote($value, $type): string
     {
         return $this->arConnectorDB->quote($value, $type);
     }
@@ -266,7 +266,7 @@ class arConnectorCache extends arConnector
     /**
      * @param ActiveRecord $ar
      */
-    public function updateIndices(ActiveRecord $ar)
+    public function updateIndices(ActiveRecord $ar): void
     {
         $this->arConnectorDB->updateIndices($ar);
     }

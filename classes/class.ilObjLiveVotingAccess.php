@@ -65,7 +65,7 @@ class ilObjLiveVotingAccess extends ilObjectPluginAccess
      *
      * @return    boolean        true, if everything is ok
      */
-    public function _checkAccess($a_cmd, $a_permission, $a_ref_id, $a_obj_id, $a_user_id = "")
+    public function _checkAccess(string $cmd, string $a_permission, int $a_ref_id, int $a_obj_id, ?int $a_user_id = null): bool
     {
         if ($a_user_id == "") {
             $a_user_id = self::dic()->user()->getId();
