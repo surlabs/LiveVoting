@@ -115,7 +115,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function buildAtomQuery()
+    public function buildAtomQuery():\ilAtomQuery
     {
         return $this->db->buildAtomQuery();
     }
@@ -340,7 +340,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function execute($stmt, $data = array())
+    public function execute($stmt, $data = array()):\ilDBStatement
     {
         return $this->db->execute($stmt, $data);
     }
@@ -376,7 +376,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function fetchObject($query_result)
+    public function fetchObject($query_result): null |\stdClass
     {
         return $this->db->fetchObject($query_result);
     }
@@ -385,9 +385,9 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function free($a_st) :void
+    public function free($a_st):void
     {
-        return $this->db->free($a_st);
+        $this->db->free($a_st);
     }
 
 
@@ -412,7 +412,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function getDBType()
+    public function getDBType():string
     {
         return $this->db->getDBType();
     }
@@ -421,7 +421,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function getDBVersion()
+    public function getDBVersion():string
     {
         return $this->db->getDBVersion();
     }
@@ -430,7 +430,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function getDSN()
+    public function getDSN():string
     {
         return $this->db->getDSN();
     }
@@ -439,7 +439,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function getLastInsertId()
+    public function getLastInsertId(): int
     {
         return $this->db->getLastInsertId();
     }
@@ -448,7 +448,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function getPrimaryKeyIdentifier()
+    public function getPrimaryKeyIdentifier():string
     {
         return $this->db->getPrimaryKeyIdentifier();
     }
@@ -457,7 +457,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function getSequenceName($table_name)
+    public function getSequenceName($table_name):string
     {
         return $this->db->getSequenceName($table_name);
     }
@@ -466,7 +466,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function getServerVersion($native = false)
+    public function getServerVersion($native = false):int
     {
         return $this->db->getServerVersion($native);
     }
@@ -475,7 +475,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function getStorageEngine()
+    public function getStorageEngine():string
     {
         return $this->db->getStorageEngine();
     }
@@ -484,7 +484,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function groupConcat($a_field_name, $a_seperator = ",", $a_order = null)
+    public function groupConcat($a_field_name, $a_seperator = ",", $a_order = null):string
     {
         return $this->db->groupConcat($a_field_name, $a_seperator, $a_order);
     }
@@ -493,7 +493,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function in($field, $values, $negate = false, $type = "")
+    public function in($field, $values, $negate = false, $type = ""):string
     {
         return $this->db->in($field, $values, $negate, $type);
     }
@@ -502,7 +502,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function indexExistsByFields($table_name, $fields)
+    public function indexExistsByFields($table_name, $fields):bool
     {
         return $this->db->indexExistsByFields($table_name, $fields);
     }
@@ -511,7 +511,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function initFromIniFile($tmpClientIniFile = null)
+    public function initFromIniFile($tmpClientIniFile = null):void
     {
         $this->db->initFromIniFile($tmpClientIniFile);
     }
@@ -520,7 +520,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function insert($table_name, $values)
+    public function insert($table_name, $values):int
     {
         return $this->db->insert($table_name, $values);
     }
@@ -529,7 +529,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function isFulltextIndex($a_table, $a_name)
+    public function isFulltextIndex($a_table, $a_name):bool
     {
         return $this->db->isFulltextIndex($a_table, $a_name);
     }
@@ -538,7 +538,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function like($column, $type, $value = "?", $case_insensitive = true)
+    public function like($column, $type, $value = "?", $case_insensitive = true):string
     {
         return $this->db->like($column, $type, $value, $case_insensitive);
     }
@@ -547,7 +547,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function listSequences()
+    public function listSequences():array
     {
         return $this->db->listSequences();
     }
@@ -556,7 +556,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function listTables()
+    public function listTables():array
     {
         return $this->db->listTables();
     }
@@ -576,7 +576,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function locate($a_needle, $a_string, $a_start_pos = 1)
+    public function locate($a_needle, $a_string, $a_start_pos = 1):string
     {
         return $this->db->locate($a_needle, $a_string, $a_start_pos);
     }
@@ -587,7 +587,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
      *
      * @deprecated
      */
-    public function lockTables($tables)
+    public function lockTables($tables):void
     {
         $this->db->lockTables($tables);
     }
@@ -596,7 +596,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function lower($a_exp)
+    public function lower($a_exp):string
     {
         return $this->db->lower($a_exp);
     }
@@ -605,7 +605,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function manipulate($query)
+    public function manipulate($query):int
     {
         return $this->db->manipulate($query);
     }
@@ -614,7 +614,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function manipulateF($query, $types, $values)
+    public function manipulateF($query, $types, $values): int
     {
         return $this->db->manipulateF($query, $types, $values);
     }
@@ -623,7 +623,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function migrateAllTablesToCollation($collation = ilDBConstants::MYSQL_COLLATION_UTF8MB4)
+    public function migrateAllTablesToCollation($collation = ilDBConstants::MYSQL_COLLATION_UTF8MB4):array
     {
         return $this->db->migrateAllTablesToCollation($collation);
     }
@@ -632,7 +632,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function migrateAllTablesToEngine($engine = ilDBConstants::MYSQL_ENGINE_INNODB)
+    public function migrateAllTablesToEngine($engine = ilDBConstants::MYSQL_ENGINE_INNODB):array
     {
         return $this->db->migrateAllTablesToEngine($engine);
     }
@@ -641,7 +641,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function modifyTableColumn($table, $column, $attributes)
+    public function modifyTableColumn($table, $column, $attributes):bool
     {
         return $this->db->modifyTableColumn($table, $column, $attributes);
     }
@@ -650,7 +650,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function nextId($table_name)
+    public function nextId($table_name):int
     {
         return $this->db->nextId($table_name);
     }
@@ -659,7 +659,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function now()
+    public function now():string
     {
         return $this->db->now();
     }
@@ -668,7 +668,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function numRows($query_result)
+    public function numRows($query_result):int
     {
         return $this->db->numRows($query_result);
     }
@@ -677,7 +677,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function prepare($a_query, $a_types = null, $a_result_types = null)
+    public function prepare($a_query, $a_types = null, $a_result_types = null):\ilDBStatement
     {
         return $this->db->prepare($a_query, $a_types, $a_result_types);
     }
@@ -686,7 +686,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function prepareManip($a_query, $a_types = null)
+    public function prepareManip($a_query, $a_types = null):\ilDBStatement
     {
         return $this->db->prepareManip($a_query, $a_types);
     }
@@ -695,7 +695,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function query($query)
+    public function query($query):\ilDBStatement
     {
         return $this->db->query($query);
     }
@@ -704,7 +704,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function queryCol($query, $type = ilDBConstants::FETCHMODE_DEFAULT, $colnum = 0)
+    public function queryCol($query, $type = ilDBConstants::FETCHMODE_DEFAULT, $colnum = 0):array
     {
         return $this->db->queryCol($query, $type, $colnum);
     }
@@ -713,7 +713,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function queryF($query, $types, $values)
+    public function queryF($query, $types, $values):\ilDBStatement
     {
         return $this->db->queryF($query, $types, $values);
     }
@@ -722,7 +722,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function queryRow($query, $types = null, $fetchmode = ilDBConstants::FETCHMODE_DEFAULT)
+    public function queryRow($query, $types = null, $fetchmode = ilDBConstants::FETCHMODE_DEFAULT):array
     {
         return $this->db->queryRow($query, $types, $fetchmode);
     }
@@ -731,7 +731,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function quote($value, $type)
+    public function quote($value, $type):string
     {
         return $this->db->quote($value, $type);
     }
@@ -740,7 +740,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function quoteIdentifier($identifier, $check_option = false)
+    public function quoteIdentifier($identifier, $check_option = false):string
     {
         return $this->db->quoteIdentifier($identifier, $check_option);
     }
@@ -752,7 +752,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
      *
      * @return mixed
      */
-    public function renameTable($old_name, $new_name)
+    public function renameTable($old_name, $new_name):bool
     {
         return $this->db->renameTable($old_name, $new_name);
     }
@@ -761,25 +761,25 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function renameTableColumn($table_name, $column_old_name, $column_new_name)
+    public function renameTableColumn($table_name, $column_old_name, $column_new_name):bool
     {
-        $this->db->renameTableColumn($table_name, $column_old_name, $column_new_name);
+       return $this->db->renameTableColumn($table_name, $column_old_name, $column_new_name);
     }
 
 
     /**
      * @inheritDoc
      */
-    public function replace($table, $primaryKeys, $otherColumns)
+    public function replace($table, $primaryKeys, $otherColumns):int
     {
-        $this->db->replace($table, $primaryKeys, $otherColumns);
+       return $this->db->replace($table, $primaryKeys, $otherColumns);
     }
 
 
     /**
      * @inheritDoc
      */
-    public function rollback()
+    public function rollback():bool
     {
         return $this->db->rollback();
     }
@@ -788,7 +788,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function sanitizeMB4StringIfNotSupported($query)
+    public function sanitizeMB4StringIfNotSupported($query):string
     {
         return $this->db->sanitizeMB4StringIfNotSupported($query);
     }
@@ -797,7 +797,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function sequenceExists($sequence)
+    public function sequenceExists($sequence):bool
     {
         return $this->db->sequenceExists($sequence);
     }
@@ -806,7 +806,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function setDBHost($host)
+    public function setDBHost($host):void
     {
         $this->db->setDBHost($host);
     }
@@ -815,16 +815,16 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function setDBPassword($password)
+    public function setDBPassword($password):void
     {
-        $this->db->setDBPassword($password);
+       $this->db->setDBPassword($password);
     }
 
 
     /**
      * @inheritDoc
      */
-    public function setDBPort($port)
+    public function setDBPort($port):void
     {
         $this->db->setDBPort($port);
     }
@@ -833,7 +833,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function setDBUser($user)
+    public function setDBUser($user):void
     {
         $this->db->setDBUser($user);
     }
@@ -842,7 +842,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function setLimit($limit, $offset)
+    public function setLimit($limit, $offset):void
     {
         $this->db->setLimit($limit, $offset);
     }
@@ -851,7 +851,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function setStorageEngine($storage_engine)
+    public function setStorageEngine($storage_engine):void
     {
         $this->db->setStorageEngine($storage_engine);
     }
@@ -860,7 +860,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function substr($a_exp)
+    public function substr($a_exp):string
     {
         return $this->db->substr($a_exp);
     }
@@ -869,7 +869,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function supports($feature)
+    public function supports($feature):bool
     {
         return $this->db->supports($feature);
     }
@@ -878,7 +878,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function supportsCollationMigration()
+    public function supportsCollationMigration():bool
     {
         return $this->db->supportsCollationMigration();
     }
@@ -887,7 +887,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function supportsEngineMigration()
+    public function supportsEngineMigration():bool
     {
         return $this->db->supportsEngineMigration();
     }
@@ -896,7 +896,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function supportsFulltext()
+    public function supportsFulltext():bool
     {
         return $this->db->supportsFulltext();
     }
@@ -905,7 +905,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function supportsSlave()
+    public function supportsSlave():bool
     {
         return $this->db->supportsSlave();
     }
@@ -914,7 +914,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function supportsTransactions()
+    public function supportsTransactions():bool
     {
         return $this->db->supportsTransactions();
     }
@@ -923,7 +923,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function tableColumnExists($table_name, $column_name)
+    public function tableColumnExists($table_name, $column_name):bool
     {
         return $this->db->tableColumnExists($table_name, $column_name);
     }
@@ -932,7 +932,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function tableExists($table_name)
+    public function tableExists($table_name):bool
     {
         return $this->db->tableExists($table_name);
     }
@@ -941,7 +941,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function uniqueConstraintExists($table, array $fields)
+    public function uniqueConstraintExists($table, array $fields):bool
     {
         return $this->db->uniqueConstraintExists($table, $fields);
     }
@@ -952,7 +952,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
      *
      * @deprecated
      */
-    public function unixTimestamp()
+    public function unixTimestamp():string
     {
         return $this->db->unixTimestamp();
     }
@@ -963,7 +963,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
      *
      * @deprecated
      */
-    public function unlockTables()
+    public function unlockTables():void
     {
         $this->db->unlockTables();
     }
@@ -972,7 +972,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function update($table_name, $values, $where)
+    public function update($table_name, $values, $where):int
     {
         return $this->db->update($table_name, $values, $where);
     }
@@ -981,7 +981,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function upper($a_exp)
+    public function upper($a_exp):string
     {
         return $this->db->upper($a_exp);
     }
@@ -990,7 +990,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function useSlave($bool)
+    public function useSlave($bool):bool
     {
         return $this->db->useSlave($bool);
     }
