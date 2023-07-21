@@ -20,6 +20,7 @@ class xlvoConfGUI extends xlvoGUI
 {
 
     const CMD_RESET_TOKEN = 'resetToken';
+    const PLUGIN_CLASS_NAME = self::class;
 
 
     /**
@@ -35,7 +36,8 @@ class xlvoConfGUI extends xlvoGUI
 
     public function index()
     {
-        if (xlvoConf::getConfig(xlvoConf::F_RESULT_API)) {
+        /*
+         * if (xlvoConf::getConfig(xlvoConf::F_RESULT_API)) {
             $b = ilLinkButton::getInstance();
             $b->setUrl(self::dic()->ctrl()->getLinkTarget($this, self::CMD_RESET_TOKEN));
             $b->setCaption($this->txt('regenerate_token'), false);
@@ -50,6 +52,7 @@ class xlvoConfGUI extends xlvoGUI
             $b->setCaption($this->txt('open_result_api'), false);
             self::dic()->toolbar()->addButtonInstance($b);
         }
+         */
 
         $xlvoConfFormGUI = new xlvoConfFormGUI($this);
         $xlvoConfFormGUI->fillForm();

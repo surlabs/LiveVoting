@@ -48,7 +48,7 @@ final class Plugin implements PluginInterface
      *
      * @return ilLanguage
      */
-    private static final function getLanguage(string $lang) : ilLanguage
+    private static function getLanguage(string $lang) : ilLanguage
     {
         if (!isset(self::$languages[$lang])) {
             self::$languages[$lang] = new ilLanguage($lang);

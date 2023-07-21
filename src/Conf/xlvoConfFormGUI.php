@@ -104,9 +104,9 @@ class xlvoConfFormGUI extends ilPropertyFormGUI
         $result_api->addSubItem($api_type);
 
         $api_token = new ilNonEditableValueGUI();
-        $api_token->setTitle($this->parent_gui->txt(xlvoConf::F_API_TOKEN));
-        $api_token->setValue(xlvoConf::getApiToken());
-        $result_api->addSubItem($api_token);
+        //$api_token->setTitle($this->parent_gui->txt(xlvoConf::F_API_TOKEN));
+        //$api_token->setValue(xlvoConf::getApiToken());
+        //$result_api->addSubItem($api_token);
 
         // PPT Export
         $ppt_export = new ilCheckboxInputGUI($this->parent_gui->txt(xlvoConf::F_ACTIVATE_POWERPOINT_EXPORT), xlvoConf::F_ACTIVATE_POWERPOINT_EXPORT);

@@ -49,8 +49,14 @@ class ilLiveVotingPlugin extends ilRepositoryObjectPlugin
      */
     public static function getInstance()
     {
+        GLOBAL $DIC;
+        /** @var ilComponentFactory $component_factory */
+        $component_factory = $DIC["component.factory"];
+        return $component_factory->getPlugin('xlvo');
+
         if (!isset(self::$instance)) {
-            self::$instance = new self();
+
+            self::$instance = new self(array(), 0, true);
         }
 
         return self::$instance;

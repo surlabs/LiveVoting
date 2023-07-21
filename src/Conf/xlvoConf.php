@@ -310,13 +310,16 @@ class xlvoConf extends CachingActiveRecord
      */
     public static function getConfig($name)
     {
-        if (!self::$cache_loaded[$name]) {
-            $obj = new self($name);
-            self::$cache[$name] = json_decode($obj->getValue());
-            self::$cache_loaded[$name] = true;
+        if(isset(self::$cache_loaded[$name])){
+            if (!self::$cache_loaded[$name]) {
+                $obj = new self($name);
+                self::$cache[$name] = json_decode($obj->getValue());
+                self::$cache_loaded[$name] = true;
+            }
+            return self::$cache[$name];
+
         }
 
-        return self::$cache[$name];
     }
 
 
