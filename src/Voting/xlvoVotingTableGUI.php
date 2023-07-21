@@ -134,7 +134,7 @@ class xlvoVotingTableGUI extends ilTable2GUI
     /**
      * @param array $a_set
      */
-    public function fillRow($a_set)
+    protected function fillRow(array $a_set): void
     {
         /**
          * @var xlvoVoting $xlvoVoting

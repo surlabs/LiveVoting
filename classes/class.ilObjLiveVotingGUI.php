@@ -205,7 +205,7 @@ class ilObjLiveVotingGUI extends ilObjectPluginGUI implements ilDesktopItemHandl
                     if ($this->getCreationMode()) {
                         $this->$cmd();
                     } else {
-                        $this->performCommand();
+                        $this->performCommand($cmd);
                     }
                 }
                 break;
