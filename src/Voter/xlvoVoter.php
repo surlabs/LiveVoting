@@ -26,7 +26,7 @@ class xlvoVoter extends CachingActiveRecord
     /**
      * @return string
      */
-    public function getConnectorContainerName()
+    public function getConnectorContainerName():string
     {
         return self::TABLE_NAME;
     }
