@@ -10,7 +10,7 @@ use srag\DIC\LiveVoting\DICTrait;
  *
  * @author             Fabian Schmid <fs@studer-raimann.ch>
  *
- * @ilCtrl_IsCalledBy  ilLiveVotingConfigGUI: ilObjComponentSettingsGUIs
+ * @ilCtrl_IsCalledBy  ilLiveVotingConfigGUI: ilObjComponentSettingsGUI
  */
 class ilLiveVotingConfigGUI extends ilPluginConfigGUI
 {
