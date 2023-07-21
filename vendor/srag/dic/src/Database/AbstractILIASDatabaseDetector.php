@@ -842,7 +842,8 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function setLimit($limit, $offset):void
+
+    public function setLimit(int $limit, int $offset = 0): void
     {
         $this->db->setLimit($limit, $offset);
     }
