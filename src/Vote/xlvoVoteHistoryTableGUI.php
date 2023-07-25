@@ -53,7 +53,7 @@ class xlvoVoteHistoryTableGUI extends ilTable2GUI
     }
 
 
-    public function fillRow($set)
+    public function fillRow($set):void
     {
         $this->tpl->setVariable("ANSWER", $set['answer']);
         $date = new ilDateTime($set['timestamp'], IL_CAL_UNIX);

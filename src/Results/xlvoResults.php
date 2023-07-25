@@ -92,7 +92,8 @@ class xlvoResults
                     "user_identifier" => $participant->getUserIdentifier(),
                     "status"          => xlvoVote::STAT_ACTIVE,
                 ))->get();
-                $vote = array_shift(array_values($votes));
+                $var_aux= array_values($votes);
+                $vote = array_shift( $var_aux);
                 $vote_ids = array_keys($votes);
                 $data[] = array(
                     "position"        => (int) $voting->getPosition(),
