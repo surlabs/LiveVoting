@@ -21,7 +21,7 @@ trait BasePluginUninstallTrait
     /**
      * @inheritDoc
      */
-    public function updateDatabase() : int
+    protected function updateDatabase() : int
     {
         if ($this->shouldUseOneUpdateStepOnly()) {
             $this->writeDBVersion(0);

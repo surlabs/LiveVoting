@@ -12,19 +12,49 @@ use srag\DIC\LiveVoting\DICTrait;
  *
  * @ilCtrl_IsCalledBy  ilLiveVotingConfigGUI: ilObjComponentSettingsGUI
  */
-class ilLiveVotingConfigGUI extends ilPluginConfigGUI
+class ilLiveVotingConfigGUI extends ilObjectGUI
 {
 
     use DICTrait;
     use LiveVotingTrait;
     const PLUGIN_CLASS_NAME = ilLiveVotingPlugin::class;
+    protected ?ilPlugin $plugin = null;
 
 
     public function __construct()
     {
+        global $DIC;
 
+        parent::__construct(array(), 0, true, true);
+
+        /** @var ilComponentFactory $component_factory */
+        $component_factory = $DIC["component.factory"];
+        $this->setPluginObject($component_factory->getPlugin('xlvo'));
+
+
+        //#ILIAS8 Set plugin name in ilObjComponentSettingsGUI
+        $this->ctrl->setParameter($this, ilObjComponentSettingsGUI::P_PLUGIN_NAME, 'LiveVoting');
     }
 
+
+    /**
+     * @return ilLiveVotingConfigGUI
+     */
+    public function getPlugin(): ilLiveVotingConfigGUI
+    {
+        /** @var ilLiveVotingConfigGUI $plugin */
+        $plugin = $this->plugin;
+        return $plugin;
+    }
+
+    /**
+     * #ILIAS8 Add Object to setPlugin to fit the current ilObjComponentSettingsGUI implementation
+     * @param ilPlugin|null $plugin
+     */
+    public function setPluginObject(?ilPlugin $plugin): void
+    {
+        $this->plugin = $plugin;
+    }
 
     public function executeCommand(): void
     {
