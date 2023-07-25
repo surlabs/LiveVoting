@@ -154,8 +154,12 @@ class xlvoResultsGUI extends xlvoGUI
         $newRound->setObjId($this->obj_id);
         $newRound->store();
         self::dic()->ctrl()->setParameter($this, 'round_id', xlvoRound::getLatestRound($this->obj_id)->getId());
-        ilUtil::sendSuccess(self::plugin()->translate("common_new_round_created"), true);
-        self::dic()->ctrl()->redirect($this, self::CMD_SHOW);
+        //ilUtil::sendSuccess(self::plugin()->translate("common_new_round_created"), true);
+
+        global $DIC;
+        $message = $DIC->ui()->factory()->messageBox()->success(self::plugin()->translate(self::plugin()->translate("common_new_round_created")));
+        $DIC->ui()->renderer()->render($message);
+         self::dic()->ctrl()->redirect($this, self::CMD_SHOW);
     }
 
 

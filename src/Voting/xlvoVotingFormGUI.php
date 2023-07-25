@@ -218,7 +218,11 @@ class xlvoVotingFormGUI extends ilPropertyFormGUI
 
         $this->setValuesByArray($array);
         if ($this->voting->getVotingStatus() == xlvoVoting::STAT_INCOMPLETE) {
-            ilUtil::sendInfo($this->parent_gui->txt('msg_voting_not_complete'), false);
+           // ilUtil::sendInfo($this->parent_gui->txt('msg_voting_not_complete'), false);
+
+            global $DIC;
+            $message = $DIC->ui()->factory()->messageBox()->info($this->parent_gui->txt('msg_voting_not_complete'));
+            $DIC->ui()->renderer()->render($message);
         }
     }
 
@@ -229,6 +233,7 @@ class xlvoVotingFormGUI extends ilPropertyFormGUI
      */
     public function fillObject()
     {
+
         if (!$this->checkInput()) {
             return false;
         }
@@ -249,7 +254,11 @@ class xlvoVotingFormGUI extends ilPropertyFormGUI
 
             return true;
         } catch (xlvoSubFormGUIHandleFieldException $ex) {
-            ilUtil::sendFailure($ex->getMessage(), true);
+           // ilUtil::sendFailure($ex->getMessage(), true);
+
+            global $DIC;
+            $message = $DIC->ui()->factory()->messageBox()->failure($ex->getMessage());
+            $DIC->ui()->renderer()->render($message);
 
             return false;
         }
@@ -270,7 +279,11 @@ class xlvoVotingFormGUI extends ilPropertyFormGUI
             $this->voting->store();
             xlvoSubFormGUI::getInstance($this->getVoting())->handleAfterCreation($this->voting);
         } else {
-            ilUtil::sendFailure($this->parent_gui->txt('permission_denied_object'), true);
+          //  ilUtil::sendFailure($this->parent_gui->txt('permission_denied_object'), true);
+            global $DIC;
+            $message = $DIC->ui()->factory()->messageBox()->failure('permission_denied_object');
+            $DIC->ui()->renderer()->render($message);
+
             self::dic()->ctrl()->redirect($this->parent_gui, xlvoVotingGUI::CMD_STANDARD);
         }
 

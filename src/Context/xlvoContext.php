@@ -35,7 +35,7 @@ class xlvoContext extends ilContext
      *
      * @return bool
      */
-    public static function init($context)
+    public static function init($context):bool
     {
         ilContext::$class_name = xlvoContextLiveVoting::class;
         ilContext::$type = -1;

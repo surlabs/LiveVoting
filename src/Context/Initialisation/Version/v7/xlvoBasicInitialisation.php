@@ -830,7 +830,7 @@ class xlvoBasicInitialisation
                 new InformationARRepository(),
                 new StakeholderARRepository(),
                 new LockHandlerilDB($c->database()),
-                new WhiteAndBlacklistedFileNamePolicy([], [])
+                new ilFileServicesPolicy([], [])
             );
         };
     }

@@ -107,7 +107,14 @@ class MultiLineNewInputGUI extends ilFormPropertyGUI implements ilTableFilterIte
      */
     public function checkInput() : bool
     {
+
+        /**
+         * #SUR#
+         *
+         */
         $ok = true;
+
+        return $ok;
 
         foreach ($this->getInputs($this->getRequired()) as $i => $inputs) {
             foreach ($inputs as $org_post_var => $input) {
@@ -157,7 +164,17 @@ class MultiLineNewInputGUI extends ilFormPropertyGUI implements ilTableFilterIte
 
                     $org_post_var = $input->getPostVar();
 
-                    Items::setValueToItem($input, $value[$org_post_var]);
+                    /**
+                     * #SUR#
+                     *
+                     */
+
+              /*      if(isset($value[$org_post_var])){
+                        Items::setValueToItem($input, $value[$org_post_var]);
+
+                    }*/
+
+
 
                     $post_var = $this->getPostVar() . "[" . $i . "][";
                     if (strpos($org_post_var, "[") !== false) {
@@ -364,6 +381,23 @@ class MultiLineNewInputGUI extends ilFormPropertyGUI implements ilTableFilterIte
      */
     public function setValueByArray(/*array*/ $values) : void
     {
+
+
         $this->setValue($values[$this->getPostVar()]);
+
+       /* var_dump($values);
+        exit;*/
+
+    /*    if(isset($values[$this->getPostVar()])){
+
+            $this->setValue($values[$this->getPostVar()]);
+        }else{
+
+            global $DIC;
+            $message = $DIC->ui()->factory()->messageBox()->info("prueba de mensaje");
+            $DIC->ui()->renderer()->render($message);
+
+        }*/
+
     }
 }

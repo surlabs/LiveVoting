@@ -21,8 +21,9 @@ class xlvoToolbarGUI extends ilToolbarGUI
     const PLUGIN_CLASS_NAME = ilLiveVotingPlugin::class;
 
 
-    protected function applyAutoStickyToSingleElement()
+    protected function applyAutoStickyToSingleElement():void
     {
-        return null;
+        /*** SUR */
+        //return null;
     }
 }

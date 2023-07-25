@@ -6,6 +6,7 @@ require_once __DIR__ . "/../../../../autoload.php";
 
 use ilDBConstants;
 use ilObjUser;
+use const ANONYMOUS_USER_ID;
 
 /**
  * Class UsersAjaxAutoCompleteCtrl
@@ -31,6 +32,8 @@ class UsersAjaxAutoCompleteCtrl extends AbstractAjaxAutoCompleteCtrl
      */
     public function fillOptions(array $ids) : array
     {
+        /*** SUR  Se añade la siguiente linea para definir  la constante ANONYMOUS_USER_ID */
+        //define("ANONYMOUS_USER_ID", $this->settings->get("anonymous_user_id"));
         return $this->formatUsers(self::dic()->database()->fetchAll(self::dic()->database()->queryF('
 SELECT usr_id, firstname, lastname, login
 FROM usr_data

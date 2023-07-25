@@ -317,7 +317,9 @@ class xlvoPin
         /**
          * @var xlvoVotingConfig $xlvoVotingConfigObject
          */
-        $xlvoVotingConfigObject = xlvoVotingConfig::find($xlvoVotingConfig->id);
+
+        /*** SUR  Se ha cambiado id por getObjId*/
+        $xlvoVotingConfigObject = xlvoVotingConfig::find($xlvoVotingConfig->getObjId);
 
         return $xlvoVotingConfigObject->getLastAccess();
     }

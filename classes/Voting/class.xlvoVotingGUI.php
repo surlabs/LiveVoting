@@ -111,7 +111,13 @@ class xlvoVotingGUI
     protected function content()
     {
         if (!ilObjLiveVotingAccess::hasWriteAccess()) {
-            ilUtil::sendFailure(self::plugin()->translate('permission_denied_write'), true);
+
+            //ilUtil::sendFailure(self::plugin()->translate('permission_denied_write'), true);
+
+            global $DIC;
+            $message = $DIC->ui()->factory()->messageBox()->info(self::plugin()->translate('permission_denied_write'));
+            $DIC->ui()->renderer()->render($message);
+
         } elseif (ilObjLiveVotingAccess::hasWriteAccess()) {
             $b = ilLinkButton::getInstance();
             $b->setPrimary(true);
@@ -185,7 +191,12 @@ class xlvoVotingGUI
     protected function selectType()
     {
         if (!ilObjLiveVotingAccess::hasWriteAccess()) {
-            ilUtil::sendFailure(self::plugin()->translate('permission_denied_write'), true);
+           // ilUtil::sendFailure(self::plugin()->translate('permission_denied_write'), true);
+
+            global $DIC;
+            $message = $DIC->ui()->factory()->messageBox()->failure(self::plugin()->translate('permission_denied_write'));
+            $DIC->ui()->renderer()->render($message);
+
             self::dic()->ctrl()->redirect($this, self::CMD_STANDARD);
         } else {
             $form = new ilPropertyFormGUI();
@@ -214,7 +225,11 @@ class xlvoVotingGUI
     protected function add()
     {
         if (!ilObjLiveVotingAccess::hasWriteAccess()) {
-            ilUtil::sendFailure(self::plugin()->translate('permission_denied_write'), true);
+           // ilUtil::sendFailure(self::plugin()->translate('permission_denied_write'), true);
+
+            global $DIC;
+            $message = $DIC->ui()->factory()->messageBox()->failure(self::plugin()->translate('permission_denied_write'));
+            $DIC->ui()->renderer()->render($message);
             self::dic()->ctrl()->redirect($this, self::CMD_STANDARD);
         } else {
             $xlvoVoting = new xlvoVoting();
@@ -232,7 +247,12 @@ class xlvoVotingGUI
     protected function create()
     {
         if (!ilObjLiveVotingAccess::hasWriteAccess()) {
-            ilUtil::sendFailure(self::plugin()->translate('permission_denied_write'), true);
+           // ilUtil::sendFailure(self::plugin()->translate('permission_denied_write'), true);
+
+            global $DIC;
+            $message = $DIC->ui()->factory()->messageBox()->failure(self::plugin()->translate('permission_denied_write'));
+            $DIC->ui()->renderer()->render($message);
+
             self::dic()->ctrl()->redirect($this, self::CMD_STANDARD);
         } else {
             $xlvoVoting = new xlvoVoting();
@@ -240,7 +260,12 @@ class xlvoVotingGUI
             $xlvoVotingFormGUI = xlvoVotingFormGUI::get($this, $xlvoVoting);
             $xlvoVotingFormGUI->setValuesByPost();
             if ($xlvoVotingFormGUI->saveObject()) {
-                ilUtil::sendSuccess(self::plugin()->translate('msg_success_voting_created'), true);
+                //ilUtil::sendSuccess(self::plugin()->translate('msg_success_voting_created'), true);
+
+                global $DIC;
+                $message = $DIC->ui()->factory()->messageBox()->success(self::plugin()->translate('msg_success_voting_created'));
+                $DIC->ui()->renderer()->render($message);
+
                 self::dic()->ctrl()->redirect($this, self::CMD_STANDARD);
             }
             self::dic()->ui()->mainTemplate()->setContent($xlvoVotingFormGUI->getHTML());
@@ -254,7 +279,12 @@ class xlvoVotingGUI
     protected function edit()
     {
         if (!ilObjLiveVotingAccess::hasWriteAccess()) {
-            ilUtil::sendFailure(self::plugin()->translate('permission_denied_write'), true);
+            //ilUtil::sendFailure(self::plugin()->translate('permission_denied_write'), true);
+
+            global $DIC;
+            $message = $DIC->ui()->factory()->messageBox()->info(self::plugin()->translate('permission_denied_write'));
+            $DIC->ui()->renderer()->render($message);
+
             self::dic()->ctrl()->redirect($this, self::CMD_STANDARD);
         } else {
             /**
@@ -341,7 +371,13 @@ class xlvoVotingGUI
     protected function update($cmd = self::CMD_STANDARD)
     {
         if (!ilObjLiveVotingAccess::hasWriteAccess()) {
-            ilUtil::sendFailure(self::plugin()->translate('permission_denied_write'), true);
+            //ilUtil::sendFailure(self::plugin()->translate('permission_denied_write'), true);
+
+            global $DIC;
+            $message = $DIC->ui()->factory()->messageBox()->info(self::plugin()->translate('permission_denied_write'));
+            $DIC->ui()->renderer()->render($message);
+
+
             self::dic()->ctrl()->redirect($this, self::CMD_STANDARD);
         } else {
             $xlvoVoting = xlvoVoting::find($_GET[self::IDENTIFIER]);
@@ -349,7 +385,12 @@ class xlvoVotingGUI
             $xlvoVotingFormGUI = xlvoVotingFormGUI::get($this, $xlvoVoting);
             $xlvoVotingFormGUI->setValuesByPost();
             if ($xlvoVotingFormGUI->saveObject()) {
-                ilUtil::sendSuccess(self::plugin()->translate('msg_success_voting_updated'), true);
+               // ilUtil::sendSuccess(self::plugin()->translate('msg_success_voting_updated'), true);
+
+                global $DIC;
+                $message = $DIC->ui()->factory()->messageBox()->success(self::plugin()->translate('msg_success_voting_updated'));
+                $DIC->ui()->renderer()->render($message);
+
                 self::dic()->ctrl()->redirect($this, $cmd);
             }
             self::dic()->ui()->mainTemplate()->setContent($xlvoVotingFormGUI->getHTML());
@@ -363,7 +404,12 @@ class xlvoVotingGUI
     protected function confirmDelete()
     {
         if (!ilObjLiveVotingAccess::hasWriteAccess()) {
-            ilUtil::sendFailure(self::plugin()->translate('permission_denied_write'), true);
+            //ilUtil::sendFailure(self::plugin()->translate('permission_denied_write'), true);
+
+            global $DIC;
+            $message = $DIC->ui()->factory()->messageBox()->info(self::plugin()->translate('permission_denied_write'));
+            $DIC->ui()->renderer()->render($message);
+
             self::dic()->ctrl()->redirect($this, self::CMD_STANDARD);
         } else {
 
@@ -382,7 +428,12 @@ class xlvoVotingGUI
 
                 self::dic()->ui()->mainTemplate()->setContent($confirm->getHTML());
             } else {
-                ilUtil::sendFailure(self::plugin()->translate('permission_denied_object'), true);
+               //ilUtil::sendFailure(self::plugin()->translate('permission_denied_object'), true);
+
+                global $DIC;
+                $message = $DIC->ui()->factory()->messageBox()->info(self::plugin()->translate('permission_denied_object'));
+                $DIC->ui()->renderer()->render($message);
+
                 self::dic()->ctrl()->redirect($this, self::CMD_STANDARD);
             }
         }
@@ -395,7 +446,12 @@ class xlvoVotingGUI
     protected function delete()
     {
         if (!ilObjLiveVotingAccess::hasWriteAccess()) {
-            ilUtil::sendFailure(self::plugin()->translate('permission_denied_write'), true);
+            //ilUtil::sendFailure(self::plugin()->translate('permission_denied_write'), true);
+
+            global $DIC;
+            $message = $DIC->ui()->factory()->messageBox()->info(self::plugin()->translate('permission_denied_write'));
+            $DIC->ui()->renderer()->render($message);
+
             self::dic()->ctrl()->redirect($this, self::CMD_STANDARD);
         } else {
 
@@ -422,7 +478,11 @@ class xlvoVotingGUI
                 $xlvoVoting->delete();
                 $this->cancel();
             } else {
-                ilUtil::sendFailure(self::plugin()->translate('delete_failed'), true);
+               // ilUtil::sendFailure(self::plugin()->translate('delete_failed'), true);
+
+                global $DIC;
+                $message = $DIC->ui()->factory()->messageBox()->failure(self::plugin()->translate('delete_failed'));
+                $DIC->ui()->renderer()->render($message);
                 self::dic()->ctrl()->redirect($this, self::CMD_STANDARD);
             }
         }
@@ -435,7 +495,12 @@ class xlvoVotingGUI
     protected function confirmReset()
     {
         if (!ilObjLiveVotingAccess::hasWriteAccess()) {
-            ilUtil::sendFailure(self::plugin()->translate('permission_denied_write'), true);
+            //ilUtil::sendFailure(self::plugin()->translate('permission_denied_write'), true);
+
+            global $DIC;
+            $message = $DIC->ui()->factory()->messageBox()->info(self::plugin()->translate('permission_denied_write'));
+            $DIC->ui()->renderer()->render($message);
+
             self::dic()->ctrl()->redirect($this, self::CMD_STANDARD);
         } else {
 
@@ -454,7 +519,12 @@ class xlvoVotingGUI
 
                 self::dic()->ui()->mainTemplate()->setContent($confirm->getHTML());
             } else {
-                ilUtil::sendFailure($this->txt('permission_denied_object'), true);
+               // ilUtil::sendFailure($this->txt('permission_denied_object'), true);
+
+                global $DIC;
+                $message = $DIC->ui()->factory()->messageBox()->failure($this->txt('permission_denied_object'));
+                $DIC->ui()->renderer()->render($message);
+
                 self::dic()->ctrl()->redirect($this, self::CMD_STANDARD);
             }
         }
@@ -467,7 +537,12 @@ class xlvoVotingGUI
     protected function reset()
     {
         if (!ilObjLiveVotingAccess::hasWriteAccess()) {
-            ilUtil::sendFailure(self::plugin()->translate('permission_denied_write'), true);
+           // ilUtil::sendFailure(self::plugin()->translate('permission_denied_write'), true);
+
+            global $DIC;
+            $message = $DIC->ui()->factory()->messageBox()->failure(self::plugin()->translate('permission_denied_write'));
+            $DIC->ui()->renderer()->render($message);
+
             self::dic()->ctrl()->redirect($this, self::CMD_STANDARD);
         } else {
             /**
@@ -486,7 +561,12 @@ class xlvoVotingGUI
                 }
                 $this->cancel();
             } else {
-                ilUtil::sendFailure(self::plugin()->translate('reset_failed'), true);
+               // ilUtil::sendFailure(self::plugin()->translate('reset_failed'), true);
+
+                global $DIC;
+                $message = $DIC->ui()->factory()->messageBox()->failure(self::plugin()->translate('reset_failed'));
+                $DIC->ui()->renderer()->render($message);
+
                 self::dic()->ctrl()->redirect($this, self::CMD_STANDARD);
             }
         }
@@ -499,7 +579,12 @@ class xlvoVotingGUI
     protected function confirmResetAll()
     {
         if (!ilObjLiveVotingAccess::hasWriteAccess()) {
-            ilUtil::sendFailure(self::plugin()->translate('permission_denied_write'), true);
+           // ilUtil::sendFailure(self::plugin()->translate('permission_denied_write'), true);
+
+            global $DIC;
+            $message = $DIC->ui()->factory()->messageBox()->failure(self::plugin()->translate('permission_denied_write'));
+            $DIC->ui()->renderer()->render($message);
+
             self::dic()->ctrl()->redirect($this, self::CMD_STANDARD);
         } else {
             ilUtil::sendQuestion($this->txt('confirm_reset_all'), true);
@@ -528,7 +613,11 @@ class xlvoVotingGUI
     protected function resetAll()
     {
         if (!ilObjLiveVotingAccess::hasWriteAccess()) {
-            ilUtil::sendFailure(self::plugin()->translate('permission_denied_write'), true);
+            //ilUtil::sendFailure(self::plugin()->translate('permission_denied_write'), true);
+            global $DIC;
+            $message = $DIC->ui()->factory()->messageBox()->info(self::plugin()->translate('permission_denied_write'));
+            $DIC->ui()->renderer()->render($message);
+
             self::dic()->ctrl()->redirect($this, self::CMD_STANDARD);
         } else {
             /**
@@ -560,7 +649,12 @@ class xlvoVotingGUI
          */
         $xlvoVoting = xlvoVoting::find($_GET[self::IDENTIFIER]);
         $xlvoVoting->fullClone(true, true);
-        ilUtil::sendSuccess(self::plugin()->translate('voting_msg_duplicated'), true);
+       // ilUtil::sendSuccess(self::plugin()->translate('voting_msg_duplicated'), true);
+
+        global $DIC;
+        $message = $DIC->ui()->factory()->messageBox()->success(self::plugin()->translate('voting_msg_duplicated'));
+        $DIC->ui()->renderer()->render($message);
+
         $this->cancel();
     }
 
@@ -620,7 +714,12 @@ class xlvoVotingGUI
          */
         $xlvoVoting = xlvoVoting::find($_GET[self::IDENTIFIER]);
         $xlvoVoting->fullClone(true, true, $obj_id);
-        ilUtil::sendSuccess(self::plugin()->translate('voting_msg_duplicated'), true);
+       // ilUtil::sendSuccess(self::plugin()->translate('voting_msg_duplicated'), true);
+
+        global $DIC;
+        $message = $DIC->ui()->factory()->messageBox()->success(self::plugin()->translate('voting_msg_duplicated'));
+        $DIC->ui()->renderer()->render($message);
+
         $this->cancel();
     }
 
@@ -640,7 +739,12 @@ class xlvoVotingGUI
     protected function saveSorting()
     {
         if (!ilObjLiveVotingAccess::hasWriteAccess()) {
-            ilUtil::sendFailure(self::plugin()->translate('permission_denied_write'), true);
+          //  ilUtil::sendFailure(self::plugin()->translate('permission_denied_write'), true);
+
+            global $DIC;
+            $message = $DIC->ui()->factory()->messageBox()->failure(self::plugin()->translate('permission_denied_write'));
+            $DIC->ui()->renderer()->render($message);
+
         } else {
             if (is_array($_POST['position'])) {
                 foreach ($_POST['position'] as $k => $v) {
@@ -652,7 +756,12 @@ class xlvoVotingGUI
                     $xlvoVoting->store();
                 }
             }
-            ilUtil::sendSuccess(self::plugin()->translate('voting_msg_sorting_saved'), true);
+            //ilUtil::sendSuccess(self::plugin()->translate('voting_msg_sorting_saved'), true);
+
+            global $DIC;
+            $message = $DIC->ui()->factory()->messageBox()->success(self::plugin()->translate('voting_msg_sorting_saved'));
+            $DIC->ui()->renderer()->render($message);
+
             self::dic()->ctrl()->redirect($this, self::CMD_STANDARD);
         }
     }

@@ -111,7 +111,7 @@ class xlvoInitialisation extends ilInitialisation
     /**
      * set Custom Session handler which does not use db
      */
-    public static function setSessionHandler()
+    public static function setSessionHandler(): void
     {
         $session = new xlvoSessionHandler();
 
@@ -173,7 +173,7 @@ class xlvoInitialisation extends ilInitialisation
      * @param string $a_class
      * @param null   $a_source_file
      */
-    protected static function initGlobal($a_name, $a_class, $a_source_file = null)
+    protected static function initGlobal($a_name, $a_class, $a_source_file = null): void
     {
         global $DIC;
 
@@ -234,11 +234,14 @@ class xlvoInitialisation extends ilInitialisation
     /**
      * copied parent function, commented out the lti section
      */
-    protected static function initHTML()
+    protected static function initHTML(): void
     {
-        if (!self::version()->is6()) {
+
+        /*** SUR */
+
+        /*if (!self::version()->is6()) {
             return parent::initHTML();
-        }
+        }*/
         // copied parent function
         global $ilUser, $DIC;
 
@@ -340,7 +343,7 @@ class xlvoInitialisation extends ilInitialisation
     /**
      *
      */
-    protected static function initClient()
+    protected static function initClient(): void
     {
         self::determineClient();
         self::initClientIniFile();
@@ -368,7 +371,7 @@ class xlvoInitialisation extends ilInitialisation
         self::initLog();
     }
 
-    public static function initUIFramework(Container $c)
+    public static function initUIFramework(Container $c): void
     {
         parent::initUIFramework($c);
         parent::initRefinery($c);

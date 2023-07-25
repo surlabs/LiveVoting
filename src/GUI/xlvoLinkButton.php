@@ -32,7 +32,7 @@ class xlvoLinkButton extends ilLinkButton
     /**
      * Prepare render
      */
-    protected function prepareRender()
+    protected function prepareRender():void
     {
         $this->addCSSClass('btn');
     }
@@ -41,7 +41,7 @@ class xlvoLinkButton extends ilLinkButton
     /**
      * @return xlvoLinkButton
      */
-    public static function getInstance()
+    public static function getInstance():ilLinkButton
     {
         return new self(self::TYPE_XLVO_LINK);
     }

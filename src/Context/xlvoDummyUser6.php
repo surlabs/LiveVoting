@@ -33,7 +33,7 @@ class xlvoDummyUser6 extends ilObjUser implements xlvoDummyUser
      *
      * @return string returns the language code "de" without the quotes.
      */
-    public function getLanguage()
+    public function getLanguage():string
     {
         return self::dic()->language()->getLangKey();
     }
@@ -55,7 +55,7 @@ class xlvoDummyUser6 extends ilObjUser implements xlvoDummyUser
      *
      * @return bool         Returns constant false.
      */
-    public function getPref($preference)
+    public function getPref($preference): null|string
     {
         return false;
     }

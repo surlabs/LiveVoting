@@ -94,7 +94,11 @@ class xlvoPlayerGUI extends xlvoGUI
         try {
             $this->manager->prepareStart();
         } catch (xlvoPlayerException $e) {
-            ilUtil::sendFailure($this->txt('msg_no_start_' . $e->getCode()), true);
+
+            global $DIC;
+            $message = $DIC->ui()->factory()->messageBox()->failure($this->txt('msg_no_start_' . $e->getCode()));
+            $DIC->ui()->renderer()->render($message);
+         //   ilUtil::sendFailure($this->txt('msg_no_start_' . $e->getCode()), true);
 
             return;
         }

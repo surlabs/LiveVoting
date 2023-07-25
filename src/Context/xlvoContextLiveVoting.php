@@ -21,10 +21,23 @@ class xlvoContextLiveVoting implements ilContextTemplate
     const PLUGIN_CLASS_NAME = ilLiveVotingPlugin::class;
 
 
+    /** * #SUR# */
+    public static function isSessionMainContext(): bool
+    {
+       return true;
+    }
+
+    /** * #SUR# */
+    public static function modifyHttpPath(string $httpPath): string
+    {
+        return $httpPath;
+    }
+
+
     /**
      * @return bool
      */
-    public static function supportsRedirects()
+    public static function supportsRedirects():bool
     {
         return false;
     }
@@ -33,7 +46,7 @@ class xlvoContextLiveVoting implements ilContextTemplate
     /**
      * @return bool
      */
-    public static function hasUser()
+    public static function hasUser():bool
     {
         return true;
     }
@@ -42,7 +55,7 @@ class xlvoContextLiveVoting implements ilContextTemplate
     /**
      * @return bool
      */
-    public static function usesHTTP()
+    public static function usesHTTP():bool
     {
         return true;
     }
@@ -51,7 +64,7 @@ class xlvoContextLiveVoting implements ilContextTemplate
     /**
      * @return bool
      */
-    public static function hasHTML()
+    public static function hasHTML():bool
     {
         return true;
     }
@@ -60,7 +73,7 @@ class xlvoContextLiveVoting implements ilContextTemplate
     /**
      * @return bool
      */
-    public static function usesTemplate()
+    public static function usesTemplate(): bool
     {
         return true;
     }
@@ -69,7 +82,7 @@ class xlvoContextLiveVoting implements ilContextTemplate
     /**
      * @return bool
      */
-    public static function initClient()
+    public static function initClient():bool
     {
         return true;
     }
@@ -78,7 +91,7 @@ class xlvoContextLiveVoting implements ilContextTemplate
     /**
      * @return bool
      */
-    public static function doAuthentication()
+    public static function doAuthentication():bool
     {
         return false;
     }
@@ -88,7 +101,7 @@ class xlvoContextLiveVoting implements ilContextTemplate
      * Check if persistent sessions are supported
      * false for context cli
      */
-    public static function supportsPersistentSessions()
+    public static function supportsPersistentSessions():bool
     {
         return false;
     }
@@ -99,7 +112,7 @@ class xlvoContextLiveVoting implements ilContextTemplate
      *
      * @return bool
      */
-    public static function supportsPushMessages()
+    public static function supportsPushMessages():bool
     {
         return false;
     }

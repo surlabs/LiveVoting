@@ -32,7 +32,7 @@ class xlvoResultsTableGUI extends ilTable2GUI
     /**
      * @var xlvoResultsGUI
      */
-    protected $parent_obj;
+    protected ?object $parent_obj;
 
 
     /**
@@ -90,7 +90,7 @@ class xlvoResultsTableGUI extends ilTable2GUI
     /**
      * @param array $record
      */
-    public function fillRow($record)
+    public function fillRow($record): void
     {
         $this->tpl->setVariable("POSITION", $record['position']);
         $this->tpl->setVariable("USER", $record['participant']);
@@ -108,7 +108,7 @@ class xlvoResultsTableGUI extends ilTable2GUI
     }
 
 
-    public function initFilter()
+    public function initFilter() :void
     {
         $this->filter['participant'] = $this->getFilterItemByPostVar('participant')->getValue();
         $this->filter['voting'] = $this->getFilterItemByPostVar('voting')->getValue();
@@ -139,9 +139,9 @@ class xlvoResultsTableGUI extends ilTable2GUI
      *
      * @return null
      */
-    protected function fillHeaderCSV($a_csv)
+    protected function fillHeaderCSV($a_csv): void
     {
-        return null;
+       // return null;
     }
 
 
@@ -163,7 +163,7 @@ class xlvoResultsTableGUI extends ilTable2GUI
      * @param object $a_csv
      * @param array  $a_set
      */
-    protected function fillRowCSV($a_csv, $a_set)
+    protected function fillRowCSV($a_csv, $a_set): void
     {
         $a_set = array_intersect_key($a_set, $this->getCSVCols());
         array_walk($a_set, function (&$value) {
