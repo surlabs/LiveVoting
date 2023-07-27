@@ -118,6 +118,21 @@ class xlvoPlayerGUI extends xlvoGUI
         $b->setId('btn-start-voting-unfreeze');
         self::dic()->toolbar()->addButtonInstance($b);
 
+        /** SUR */
+
+    /*  global $DIC;
+        $button = $DIC->ui()->factory()->button()->standard(
+        $GUI->getPlugin()->txt('add_server'),
+        $DIC->ctrl()->getLinkTarget($GUI, 'addServer')
+
+         $DIC->toolbar()->addComponent($button);
+
+    );*/
+
+
+
+
+
         $current_selection_list = $this->getVotingSelectionList(false);
         self::dic()->toolbar()->addText($current_selection_list->getHTML());
 

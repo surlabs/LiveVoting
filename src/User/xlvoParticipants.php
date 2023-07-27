@@ -46,7 +46,14 @@ class xlvoParticipants
      */
     public static function getInstance($obj_id)
     {
-        if (!self::$instances[$obj_id]) {
+
+        /**#SUR# Se modifica el código para comprobar si existe el indice en el array asociativo**/
+
+       /* if (!self::$instances[$obj_id]) {
+            self::$instances[$obj_id] = new xlvoParticipants($obj_id);
+        }*/
+
+        if (!array_key_exists($obj_id, self::$instances)) {
             self::$instances[$obj_id] = new xlvoParticipants($obj_id);
         }
 

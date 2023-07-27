@@ -383,21 +383,24 @@ class MultiLineNewInputGUI extends ilFormPropertyGUI implements ilTableFilterIte
     {
 
 
-        $this->setValue($values[$this->getPostVar()]);
+      // $this->setValue($values[$this->getPostVar()]);
 
        /* var_dump($values);
         exit;*/
 
-    /*    if(isset($values[$this->getPostVar()])){
+        if(isset($values[$this->getPostVar()])){
 
             $this->setValue($values[$this->getPostVar()]);
+
         }else{
 
+            /** * #SUR# TERMINAR DE VER ESTE ERROR :RBP */
+
             global $DIC;
-            $message = $DIC->ui()->factory()->messageBox()->info("prueba de mensaje");
+            $message = $DIC->ui()->factory()->messageBox()->failure("prueba de mensaje");
             $DIC->ui()->renderer()->render($message);
 
-        }*/
+        }
 
     }
 }
