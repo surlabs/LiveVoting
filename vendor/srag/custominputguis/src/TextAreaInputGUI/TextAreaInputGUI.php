@@ -41,7 +41,7 @@ class TextAreaInputGUI extends ilTextAreaInputGUI
             'b',
             'span'
         ));
-        $this->usePurifier(true);
+        $this->usePurifier(false);
         $this->disableButtons(array(
             'charmap',
             'undo',

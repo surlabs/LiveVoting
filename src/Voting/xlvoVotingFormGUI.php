@@ -144,7 +144,7 @@ class xlvoVotingFormGUI extends ilPropertyFormGUI
             'span',
             'img',
         ));
-        $te->usePurifier(true);
+        $te->usePurifier(false);
         $te->disableButtons(array(
             'charmap',
             'undo',
