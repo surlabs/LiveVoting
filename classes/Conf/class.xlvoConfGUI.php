@@ -30,14 +30,18 @@ class xlvoConfGUI extends xlvoGUI
      */
     public function txt($key)
     {
-        return self::plugin()->translate($key, 'config');
+        global $DIC;
+        /** @var ilComponentFactory $component_factory */
+        $component_factory = $DIC["component.factory"];
+
+        return $component_factory->getPlugin('xlvo')->txt('config_'.$key);
     }
 
 
     public function index()
     {
-        /*
-         * if (xlvoConf::getConfig(xlvoConf::F_RESULT_API)) {
+
+          if (xlvoConf::getConfig(xlvoConf::F_RESULT_API)) {
             $b = ilLinkButton::getInstance();
             $b->setUrl(self::dic()->ctrl()->getLinkTarget($this, self::CMD_RESET_TOKEN));
             $b->setCaption($this->txt('regenerate_token'), false);
@@ -49,10 +53,10 @@ class xlvoConfGUI extends xlvoGUI
             $url = sprintf($url, xlvoConf::getApiToken(), xlvoConf::getConfig(xlvoConf::F_API_TYPE), xlvoPin::lookupPin($xlvoVoting->getObjId()));
             $b->setUrl($url);
             $b->setTarget('_blank');
-            $b->setCaption($this->txt('open_result_api'), false);
             self::dic()->toolbar()->addButtonInstance($b);
         }
-         */
+
+
 
         $xlvoConfFormGUI = new xlvoConfFormGUI($this);
         $xlvoConfFormGUI->fillForm();
@@ -70,6 +74,10 @@ class xlvoConfGUI extends xlvoGUI
 
     protected function update()
     {
+
+        echo "update";
+        exit;
+
         $xlvoConfFormGUI = new xlvoConfFormGUI($this);
         $xlvoConfFormGUI->setValuesByPost();
         if ($xlvoConfFormGUI->saveObject()) {
