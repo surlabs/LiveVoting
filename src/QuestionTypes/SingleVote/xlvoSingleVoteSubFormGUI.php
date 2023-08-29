@@ -12,6 +12,7 @@ use LiveVoting\QuestionTypes\xlvoSubFormGUI;
 use srag\CustomInputGUIs\LiveVoting\MultiLineNewInputGUI\MultiLineNewInputGUI;
 use srag\CustomInputGUIs\LiveVoting\TextInputGUI\TextInputGUI;
 use srag\CustomInputGUIs\LiveVoting\HiddenInputGUI\HiddenInputGUI;
+use ilTextInputGUI;
 
 /**
  * Class xlvoSingleVoteSubFormGUI
@@ -46,7 +47,9 @@ class xlvoSingleVoteSubFormGUI extends xlvoSubFormGUI
         //		$cb->setInfo(self::plugin()->translate('info_singlevote_colors'));
         //		$this->addFormElement($cb);
 
-        $xlvoMultiLineInputGUI = new MultiLineNewInputGUI($this->txt(self::F_OPTIONS), self::F_OPTIONS);
+        $xlvoMultiLineInputGUI = new ilTextInputGUI($this->txt(self::F_OPTIONS), self::F_OPTIONS);
+        $xlvoMultiLineInputGUI->setMulti(true,false,true);
+        /*
         $xlvoMultiLineInputGUI->setShowInputLabel(false);
 
         $xlvoMultiLineInputGUI->setShowSort(true);
@@ -56,7 +59,7 @@ class xlvoSingleVoteSubFormGUI extends xlvoSubFormGUI
         $xlvoMultiLineInputGUI->addInput($te);
 
         $h = new HiddenInputGUI(self::F_ID);
-        $xlvoMultiLineInputGUI->addInput($h);
+        $xlvoMultiLineInputGUI->addInput($h);*/
 
         $this->addFormElement($xlvoMultiLineInputGUI);
     }
@@ -76,12 +79,12 @@ class xlvoSingleVoteSubFormGUI extends xlvoSubFormGUI
                 break;
             case self::F_OPTIONS:
                 $position = 0;
-                foreach ($value as $item) {
+                foreach ($value as $id => $item) {
                     /**
                      * @var xlvoOption $xlvoOption
                      */
-                    $xlvoOption = xlvoOption::findOrGetInstance($item[self::F_ID]);
-                    $xlvoOption->setText($element->stripSlashesAddSpaceFallback($item[self::F_TEXT]));
+                    $xlvoOption = xlvoOption::findOrGetInstance($id);
+                    $xlvoOption->setText($element->stripSlashesAddSpaceFallback($item));
                     $xlvoOption->setPosition($position);
                     $xlvoOption->setStatus(xlvoOption::STAT_ACTIVE);
                     $xlvoOption->setVotingId($this->getXlvoVoting()->getId());
@@ -113,15 +116,13 @@ class xlvoSingleVoteSubFormGUI extends xlvoSubFormGUI
 
             case self::F_OPTIONS:
                 $array = array();
+                $this->xlvoVoting->afterObjectLoad();
                 /**
                  * @var xlvoOption $option
                  */
                 $options = $this->getXlvoVoting()->getVotingOptions();
                 foreach ($options as $option) {
-                    $array[] = array(
-                        self::F_ID   => $option->getId(),
-                        self::F_TEXT => $option->getTextForEditor(),
-                    );
+                    $array[$option->getId()] = $option->getTextForEditor();
                 }
 
                 return $array;
@@ -140,6 +141,7 @@ class xlvoSingleVoteSubFormGUI extends xlvoSubFormGUI
      */
     protected function handleOptions()
     {
+        echo "3";
         $ids = array();
         foreach ($this->options as $i => $xlvoOption) {
             $xlvoOption->setVotingId($this->getXlvoVoting()->getId());

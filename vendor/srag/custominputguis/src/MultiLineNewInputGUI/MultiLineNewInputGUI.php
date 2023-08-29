@@ -11,6 +11,7 @@ use srag\CustomInputGUIs\LiveVoting\Template\Template;
 use srag\DIC\LiveVoting\DICTrait;
 use srag\DIC\LiveVoting\Plugin\PluginInterface;
 use srag\DIC\LiveVoting\Version\PluginVersionParameter;
+use ILIAS\HTTP\Wrapper\SuperGlobalDropInReplacement;
 
 /**
  * Class MultiLineNewInputGUI
@@ -107,14 +108,7 @@ class MultiLineNewInputGUI extends ilFormPropertyGUI implements ilTableFilterIte
      */
     public function checkInput() : bool
     {
-
-        /**
-         * #SUR#
-         *
-         */
         $ok = true;
-
-        return $ok;
 
         foreach ($this->getInputs($this->getRequired()) as $i => $inputs) {
             foreach ($inputs as $org_post_var => $input) {
@@ -381,26 +375,6 @@ class MultiLineNewInputGUI extends ilFormPropertyGUI implements ilTableFilterIte
      */
     public function setValueByArray(/*array*/ $values) : void
     {
-
-
-      // $this->setValue($values[$this->getPostVar()]);
-
-       /* var_dump($values);
-        exit;*/
-
-        if(isset($values[$this->getPostVar()])){
-
-            $this->setValue($values[$this->getPostVar()]);
-
-        }else{
-
-            /** * #SUR# TERMINAR DE VER ESTE ERROR :RBP */
-
-            global $DIC;
-            $message = $DIC->ui()->factory()->messageBox()->failure("prueba de mensaje");
-            $DIC->ui()->renderer()->render($message);
-
-        }
-
+        $this->setValue($values[$this->getPostVar()]);
     }
 }
