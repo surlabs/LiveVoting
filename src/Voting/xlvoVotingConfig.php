@@ -227,7 +227,7 @@ class xlvoVotingConfig extends CachingActiveRecord
                     $url = xlvoConf::getConfig(xlvoConf::F_ALLOW_SHORTLINK_VOTE_LINK);
                     $url = rtrim($url, "/") . "/";
                 } else {
-                    $url = ILIAS_HTTP_PATH . substr(self::plugin()->directory(), 1) . '/pin.php?' . ParamManager::PARAM_PIN . '=';
+                    $url = ILIAS_HTTP_PATH . '/' .self::plugin()->directory() . '/pin.php?' . ParamManager::PARAM_PIN . '=';
                 }
                 $url .= xlvoPin::formatPin($this->getPin(), $force_not_format);
                 break;

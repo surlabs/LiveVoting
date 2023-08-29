@@ -510,9 +510,11 @@ class xlvoVotingGUI
             $xlvoVoting = xlvoVoting::find($_GET[self::IDENTIFIER]);
 
             if ($xlvoVoting->getObjId() == $this->getObjId()) {
-                ilUtil::sendQuestion($this->txt('confirm_reset'), true);
+
+                //ilUtil::sendQuestion($this->txt('confirm_reset'), true);
                 $confirm = new ilConfirmationGUI();
                 $confirm->addItem(self::IDENTIFIER, $xlvoVoting->getId(), $xlvoVoting->getTitle());
+                $confirm->setHeaderText($this->txt('confirm_reset'));
                 $confirm->setFormAction(self::dic()->ctrl()->getFormAction($this));
                 $confirm->setCancel($this->txt('cancel'), self::CMD_CANCEL);
                 $confirm->setConfirm($this->txt('reset'), self::CMD_RESET);
@@ -587,7 +589,7 @@ class xlvoVotingGUI
 
             self::dic()->ctrl()->redirect($this, self::CMD_STANDARD);
         } else {
-            ilUtil::sendQuestion($this->txt('confirm_reset_all'), true);
+            //ilUtil::sendQuestion($this->txt('confirm_reset_all'), true);
             $confirm = new ilConfirmationGUI();
             /**
              * @var xlvoVoting[] $votings
@@ -598,6 +600,7 @@ class xlvoVotingGUI
                 $num_votes += xlvoVote::where(array('voting_id' => $voting->getId()))->count();
             }
             $confirm->addItem(self::IDENTIFIER, 0, $this->txt('confirm_number_of_votes') . " " . $num_votes);
+            $confirm->setHeaderText($this->txt('confirm_reset_all'));
             $confirm->setFormAction(self::dic()->ctrl()->getFormAction($this));
             $confirm->setCancel($this->txt('cancel'), self::CMD_CANCEL);
             $confirm->setConfirm($this->txt('reset_all'), self::CMD_RESET_ALL);
