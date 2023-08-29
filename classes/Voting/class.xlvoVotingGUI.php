@@ -419,9 +419,9 @@ class xlvoVotingGUI
             $xlvoVoting = xlvoVoting::find($_GET[self::IDENTIFIER]);
 
             if ($xlvoVoting->getObjId() == $this->getObjId()) {
-                ilUtil::sendQuestion($this->txt('delete_confirm'), true);
                 $confirm = new ilConfirmationGUI();
                 $confirm->addItem(self::IDENTIFIER, $xlvoVoting->getId(), $xlvoVoting->getTitle());
+                $confirm->setHeaderText($this->txt('delete_confirm'));
                 $confirm->setFormAction(self::dic()->ctrl()->getFormAction($this));
                 $confirm->setCancel($this->txt('cancel'), self::CMD_CANCEL);
                 $confirm->setConfirm($this->txt('delete'), self::CMD_DELETE);
