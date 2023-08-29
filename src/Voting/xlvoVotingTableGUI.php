@@ -16,6 +16,7 @@ use LiveVoting\Utils\LiveVotingTrait;
 use srag\CustomInputGUIs\LiveVoting\TextInputGUI\TextInputGUI;
 use srag\DIC\LiveVoting\DICTrait;
 use xlvoVotingGUI;
+use ilLegacyFormElementsUtil;
 
 /**
  * Class xlvoVotingTableGUI
@@ -146,7 +147,7 @@ class xlvoVotingTableGUI extends ilTable2GUI
         $question = strip_tags($xlvoVoting->getQuestion());
 
         $question = $this->shorten($question);
-        $this->tpl->setVariable('QUESTION', ilUtil::prepareTextareaOutput($question, true));
+        $this->tpl->setVariable('QUESTION', ilLegacyFormElementsUtil::prepareTextareaOutput($question, true));
         $this->tpl->setVariable('TYPE', $this->txt('type_' . $xlvoVoting->getVotingType()));
 
         $voting_status = $this->getVotingStatus($xlvoVoting->getVotingStatus());

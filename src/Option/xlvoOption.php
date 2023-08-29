@@ -3,9 +3,9 @@
 namespace LiveVoting\Option;
 
 use ilRTE;
-use ilUtil;
 use LiveVoting\Cache\CachingActiveRecord;
 use stdClass;
+use ilLegacyFormElementsUtil;
 
 /**
  * Class xlvoOption
@@ -66,7 +66,7 @@ class xlvoOption extends CachingActiveRecord
      */
     public function getTextForPresentation()
     {
-        return ilUtil::prepareTextareaOutput($this->getTextForEditor(), true);
+        return ilLegacyFormElementsUtil::prepareTextareaOutput($this->getTextForEditor(), true);
     }
 
 

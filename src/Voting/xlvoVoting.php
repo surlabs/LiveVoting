@@ -14,6 +14,7 @@ use LiveVoting\QuestionTypes\FreeInput\xlvoFreeInputSubFormGUI;
 use LiveVoting\QuestionTypes\NumberRange\xlvoNumberRangeSubFormGUI;
 use LiveVoting\QuestionTypes\xlvoQuestionTypes;
 use stdClass;
+use ilLegacyFormElementsUtil;
 
 /**
  * Class xlvoVoting
@@ -307,6 +308,7 @@ class xlvoVoting extends CachingActiveRecord
      */
     public function create(): void
     {
+
         $res = self::dic()->database()->query('SELECT MAX(position) AS max FROM ' . self::TABLE_NAME . ' WHERE obj_id = ' . self::dic()->database()
                 ->quote($this->getObjId(), 'integer'));
         $data = self::dic()->database()->fetchObject($res);
@@ -516,7 +518,7 @@ class xlvoVoting extends CachingActiveRecord
      */
     public function getQuestionForPresentation()
     {
-        return ilUtil::prepareTextareaOutput($this->getQuestionForEditor(), true);
+        return ilLegacyFormElementsUtil::prepareTextareaOutput($this->getQuestionForEditor(), true);
     }
 
 

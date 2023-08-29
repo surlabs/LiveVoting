@@ -32,6 +32,9 @@ class GlyphGUI extends ilGlyphGUI
             self::$map[$a_glyph]['class'] = 'glyphicon glyphicon-' . $a_glyph;
         }
 
+        //asegurar que existe self::$map[$a_glyph]['txt']
+        self::$map[$a_glyph]['txt'] = $a_text;
+
         return parent::get($a_glyph, $a_text) . ' ';
     }
 

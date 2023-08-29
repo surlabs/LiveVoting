@@ -106,11 +106,11 @@ final class Plugin implements PluginInterface
 
     /**
      * @inheritDoc
-     */
+
     public function reloadDatabase() : void
     {
         $this->plugin_object->updateDatabase();
-    }
+    }*/
 
 
     /**

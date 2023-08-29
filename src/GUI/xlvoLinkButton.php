@@ -43,6 +43,6 @@ class xlvoLinkButton extends ilLinkButton
      */
     public static function getInstance():ilLinkButton
     {
-        return new self(self::TYPE_XLVO_LINK);
+        return new self((int)self::TYPE_XLVO_LINK);
     }
 }
