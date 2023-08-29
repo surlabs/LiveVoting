@@ -141,13 +141,14 @@ class xlvoSingleVoteSubFormGUI extends xlvoSubFormGUI
      */
     protected function handleOptions()
     {
-        echo "3";
         $ids = array();
         foreach ($this->options as $i => $xlvoOption) {
             $xlvoOption->setVotingId($this->getXlvoVoting()->getId());
             $xlvoOption->store();
             $ids[] = $xlvoOption->getId();
         }
+        $this->xlvoVoting->afterObjectLoad();
+
         $options = $this->getXlvoVoting()->getVotingOptions();
         foreach ($options as $xlvoOption) {
             if (!in_array($xlvoOption->getId(), $ids)) {
