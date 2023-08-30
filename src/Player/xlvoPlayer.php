@@ -296,7 +296,8 @@ class xlvoPlayer extends CachingActiveRecord
             'status'    => xlvoVote::STAT_ACTIVE,
             'round_id'  => $this->getRoundId()
         ))->orderBy('last_update', 'DESC')->getArray('last_update', 'last_update');
-        $last_update = array_shift(array_values($last_update));
+        $array = array_values($last_update);
+        $last_update = array_shift($array);
         $obj->last_update = (int) $last_update;
         $obj->attendees = self::plugin()->translate("start_online", "", [(int) xlvoVoter::countVoters($this->getId())]);
         $obj->qtype = $this->getQuestionTypeClassName();
