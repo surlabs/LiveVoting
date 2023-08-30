@@ -75,9 +75,6 @@ class xlvoConfGUI extends xlvoGUI
     protected function update()
     {
 
-        echo "update";
-        exit;
-
         $xlvoConfFormGUI = new xlvoConfFormGUI($this);
         $xlvoConfFormGUI->setValuesByPost();
         if ($xlvoConfFormGUI->saveObject()) {
