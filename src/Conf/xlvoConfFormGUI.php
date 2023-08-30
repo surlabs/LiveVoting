@@ -15,6 +15,7 @@ use LiveVoting\Utils\LiveVotingTrait;
 use srag\CustomInputGUIs\LiveVoting\TextInputGUI\TextInputGUI;
 use srag\DIC\LiveVoting\DICTrait;
 use xlvoConfGUI;
+use srag\ActiveRecordConfig\LiveVoting\Config\Config;
 
 /**
  * Class xlvoConfFormGUI
@@ -147,9 +148,17 @@ class xlvoConfFormGUI extends ilPropertyFormGUI
     public function fillForm()
     {
         $array = array();
-        foreach ($this->getItems() as $item) {
-            $this->getValuesForItem($item, $array);
+        $config = Config::findOrGetInstance("xlvo_config");
+        $config_db =$config->getArray();
+
+        foreach ($config_db as $name => $value) {
+            if($config_db[$name]["value"] == '""'){
+                $array[$name] = "";
+            }else{
+                $array[$name] = stripslashes($config_db[$name]["value"]);
+            }
         }
+
         $this->setValuesByArray($array);
     }
 
@@ -164,13 +173,19 @@ class xlvoConfFormGUI extends ilPropertyFormGUI
     {
         if (self::checkItem($item)) {
             $key = $item->getPostVar();
-            $array[$key] = xlvoConf::getConfig($key);
+            $config = Config::findOrGetInstance($key);
+
+            var_dump($config->getArray());
+            return $config->getArray();
+
             if (self::checkForSubItem($item)) {
                 foreach ($item->getSubItems() as $subitem) {
                     $this->getValuesForItem($subitem, $array);
                 }
             }
         }
+
+        return $array;
     }
 
 

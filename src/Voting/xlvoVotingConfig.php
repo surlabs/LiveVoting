@@ -269,7 +269,7 @@ class xlvoVotingConfig extends CachingActiveRecord
                 $url .= "/1";
             }
         } else {
-            $url = ILIAS_HTTP_PATH . substr(self::plugin()->directory(), 1) . '/presenter.php?' . ParamManager::PARAM_PIN . '='
+            $url = ILIAS_HTTP_PATH .'/'. self::plugin()->directory() . '/presenter.php?' . ParamManager::PARAM_PIN . '='
                 . xlvoPin::formatPin($this->getPin(), $force_not_format) . "&" . ParamManager::PARAM_PUK . "="
                 . Puk::formatPin($this->getPuk(), $force_not_format);
             if ($voting_id !== null) {

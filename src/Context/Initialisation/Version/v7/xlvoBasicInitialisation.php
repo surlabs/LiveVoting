@@ -128,8 +128,8 @@ class xlvoBasicInitialisation
         $this->initSessionHandler();
         $this->initSettings();  //required
         $this->initAccessHandling();
-        $this->buildHTTPPath();
-        $this->initHTTPServices();
+        //$this->buildHTTPPath();
+        //$this->initHTTPServices();
         $this->initLocale();
         $this->initLanguage();
         $this->initDataCache();
@@ -312,7 +312,6 @@ class xlvoBasicInitialisation
         // set constants
         define("SESSION_REMINDER_LEADTIME", 30);
         define("DEBUG", $ilClientIniFile->readVariable("system", "DEBUG"));
-        define("DEVMODE", $ilClientIniFile->readVariable("system", "DEVMODE"));
         define("SHOWNOTICES", $ilClientIniFile->readVariable("system", "SHOWNOTICES"));
         define("DEBUGTOOLS", $ilClientIniFile->readVariable("system", "DEBUGTOOLS"));
         define("ROOT_FOLDER_ID", $ilClientIniFile->readVariable('system', 'ROOT_FOLDER_ID'));
@@ -320,7 +319,7 @@ class xlvoBasicInitialisation
         define("ROLE_FOLDER_ID", $ilClientIniFile->readVariable('system', 'ROLE_FOLDER_ID'));
         define("MAIL_SETTINGS_ID", $ilClientIniFile->readVariable('system', 'MAIL_SETTINGS_ID'));
         $error_handler = $ilClientIniFile->readVariable('system', 'ERROR_HANDLER');
-        define("ERROR_HANDLER", $error_handler ? $error_handler : "PRETTY_PAGE");
+        //define("ERROR_HANDLER", $error_handler ? $error_handler : "PRETTY_PAGE");
         $log_error_trace = $ilClientIniFile->readVariable('system', 'LOG_ERROR_TRACE');
         define("LOG_ERROR_TRACE", $log_error_trace ? $log_error_trace : false);
 
@@ -636,19 +635,20 @@ class xlvoBasicInitialisation
      */
     private function determineClient()
     {
+        global $DIC;
         // check whether ini file object exists
         if (!is_object($this->iliasIniFile)) {
             throw new Exception("Fatal Error: ilInitialisation::determineClient called without initialisation of ILIAS ini file object.");
         }
 
         // set to default client if empty
-        if ($_GET["client_id"] != "") {
-            $_GET["client_id"] = ilUtil::stripSlashes($_GET["client_id"]);
+        if (isset($_GET["client_id"]) and $_GET["client_id"] != "") {
+            $_GET["client_id"] = stripslashes($_GET["client_id"]);
             if (!defined("IL_PHPUNIT_TEST")) {
                 ilUtil::setCookie("ilClientId", $_GET["client_id"]);
             }
         } else {
-            if (!$_COOKIE["ilClientId"]) {
+            if (isset($_COOKIE["ilClientId"]) and !$_COOKIE["ilClientId"]) {
                 // to do: ilias ini raus nehmen
                 $client_id = $this->iliasIniFile->readVariable("clients", "default");
                 ilUtil::setCookie("ilClientId", $client_id);

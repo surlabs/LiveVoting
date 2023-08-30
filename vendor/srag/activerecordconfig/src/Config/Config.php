@@ -103,7 +103,7 @@ class Config extends ActiveRecord
      */
     public static function setTableName(string $table_name) : void
     {
-        self::$table_name = $table_name;
+        self::$table_name = "xlvo_config";
     }
 
 
@@ -123,7 +123,7 @@ class Config extends ActiveRecord
      */
     public function getConnectorContainerName() : string
     {
-        return self::getTableName();
+        return "xlvo_config";
     }
 
 
