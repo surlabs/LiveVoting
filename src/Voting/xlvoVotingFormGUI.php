@@ -92,7 +92,7 @@ class xlvoVotingFormGUI extends ilPropertyFormGUI
 
         $this->voting = $xlvoVoting;
         $this->parent_gui = $parent_gui;
-        $this->is_new = ($this->voting->getId() == '');
+        $this->is_new = ($this->voting->getId() == 0);
 
 
         $this->initForm();
