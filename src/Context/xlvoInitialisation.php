@@ -374,7 +374,7 @@ class xlvoInitialisation extends ilInitialisation
     public static function initUIFramework(Container $c): void
     {
         parent::initUIFramework($c);
-        parent::initRefinery($c);
+       // parent::initRefinery($c);
     }
 
     /**

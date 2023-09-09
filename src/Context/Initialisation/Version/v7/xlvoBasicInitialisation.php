@@ -21,6 +21,7 @@ use ilHelp;
 use ilHTTPS;
 use ILIAS\DI\Container;
 use ILIAS\DI\HTTPServices;
+use ILIAS\Services\Init;
 use ILIAS\FileUpload\Location;
 use ILIAS\HTTP\Cookies\CookieJarFactoryImpl;
 use ILIAS\HTTP\Request\RequestFactoryImpl;
@@ -66,6 +67,8 @@ use LiveVoting\Context\xlvoRbacSystem;
 use LiveVoting\Session\xlvoSessionHandler;
 use LiveVoting\Utils\LiveVotingTrait;
 use srag\DIC\LiveVoting\DICTrait;
+use InitCtrlService;
+use InitComponentService;
 
 /**
  * Class xlvoBasicInitialisation for ILIAS 7
@@ -129,11 +132,13 @@ class xlvoBasicInitialisation
         $this->initSettings();  //required
         $this->initAccessHandling();
         //$this->buildHTTPPath();
-        //$this->initHTTPServices();
+        $this->initHTTPServices($GLOBALS["DIC"]);
         $this->initLocale();
         $this->initLanguage();
+        $this->initCore();
         $this->initDataCache();
         $this->initObjectDefinition();
+        $this->initComponentService($GLOBALS["DIC"]);
         $this->initControllFlow();
         $this->initUser();
         $this->initPluginAdmin();
@@ -569,7 +574,53 @@ class xlvoBasicInitialisation
 
     private function initControllFlow()
     {
-        $this->makeGlobal("ilCtrl", new ilCtrl());
+        global $DIC;
+
+        $DIC['refinery'] = function ($container) {
+            $dataFactory = new \ILIAS\Data\Factory();
+            $language = $container['lng'];
+
+            return new \ILIAS\Refinery\Factory($dataFactory, $language);
+        };
+
+        /*
+        $ilias_path = dirname(__FILE__, 5) . '/';
+
+        try {
+            $ctrl_structure = new ilCtrlStructure(
+                require $ilias_path . ilCtrlStructureArtifactObjective::ARTIFACT_PATH,
+                require $ilias_path . ilCtrlBaseClassArtifactObjective::ARTIFACT_PATH,
+                require $ilias_path . ilCtrlSecurityArtifactObjective::ARTIFACT_PATH
+            );
+        } catch (Throwable $t) {
+            throw new ilCtrlException(self::class . " could not require artifacts, try `composer du` first.");
+        }
+
+        $token_repository = new ilCtrlTokenRepository();
+        $path_factory = new ilCtrlPathFactory($ctrl_structure);
+        $context = new ilCtrlContext(
+            $path_factory,
+            $DIC->http()->wrapper()->query(),
+            $DIC->refinery()
+        );
+
+        // create global instance of ilCtrl
+        $GLOBALS['ilCtrl'] = new ilCtrl(
+            $ctrl_structure,
+            $token_repository,
+            $path_factory,
+            $context,
+            $DIC["http.response_sender_strategy"],
+            $DIC->http()->request(),
+            $DIC->http()->wrapper()->post(),
+            $DIC->http()->wrapper()->query(),
+            $DIC->refinery(),
+            $DIC["component.factory"]
+        );
+     */
+        (new InitCtrlService())->init($DIC);
+
+//        $this->makeGlobal("ilCtrl", $GLOBALS['ilCtrl']);
     }
 
     private function initPluginAdmin()
@@ -718,6 +769,7 @@ class xlvoBasicInitialisation
     /**
      * Initialise a fake http services to satisfy the help system module.
      */
+
     private static function initHTTPServices()
     {
         global $DIC;
@@ -738,9 +790,18 @@ class xlvoBasicInitialisation
             return new DefaultResponseSenderStrategy();
         };
 
+        $DIC['http.duration_factory'] = function ($c) {
+            return new \ILIAS\HTTP\Duration\DurationFactory(
+                new \ILIAS\HTTP\Duration\Increment\IncrementFactory()
+            );
+        };
+
         $DIC['http'] = function ($c) {
-            return new HTTPServices($c['http.response_sender_strategy'], $c['http.cookie_jar_factory'],
-                $c['http.request_factory'], $c['http.response_factory']);
+            /*
+        return new HTTPServices($c['http.response_sender_strategy'], $c['http.cookie_jar_factory'],
+            $c['http.request_factory'], $c['http.response_factory']);
+         */
+            return new \ILIAS\HTTP\Services($c);
         };
     }
 
@@ -833,5 +894,16 @@ class xlvoBasicInitialisation
                 new ilFileServicesPolicy([], [])
             );
         };
+    }
+
+    protected static function initComponentService(\ILIAS\DI\Container $container): void
+    {
+        $init = new InitComponentService();
+        $init->init($container);
+    }
+
+    protected static function initCore(): void
+    {
+        $GLOBALS["DIC"]["ilias.version"] = (new ILIAS\Data\Factory())->version(ILIAS_VERSION_NUMERIC);
     }
 }
