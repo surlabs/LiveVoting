@@ -110,4 +110,60 @@ class ilLiveVotingPlugin extends ilRepositoryObjectPlugin
     {
         $this->type = 'cld';
     }
+
+    /**
+     * Send Info Message to Screen.
+     *
+     * @param	string	message
+     * @static
+     *
+     */
+    public static function sendInfo($a_info = "")
+    {
+        global $DIC;
+        $message = $DIC->ui()->factory()->messageBox()->info($a_info);
+        $DIC->ui()->renderer()->render($message);
+    }
+
+    /**
+     * Send Failure Message to Screen.
+     *
+     * @param	string	message
+     * @static
+     *
+     */
+    public static function sendFailure($a_info = "")
+    {
+        global $DIC;
+        $message = $DIC->ui()->factory()->messageBox()->failure($a_info);
+        $DIC->ui()->renderer()->render($message);
+    }
+
+    /**
+     * Send Question to Screen.
+     *
+     * @param	string	message
+     * @static	*/
+    public static function sendQuestion($a_info = "")
+    {
+        global $DIC;
+        $message = $DIC->ui()->factory()->messageBox()->confirmation($a_info);
+        $DIC->ui()->renderer()->render($message);
+    }
+
+    /**
+     * Send Success Message to Screen.
+     *
+     * @param	string	message
+     * @static
+     *
+     */
+    public static function sendSuccess($a_info = "")
+    {
+        global $DIC;
+        $message = $DIC->ui()->factory()->messageBox()->success($a_info);
+        $DIC->ui()->renderer()->render($message);
+    }
+}
+
 }

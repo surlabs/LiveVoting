@@ -78,12 +78,7 @@ class xlvoConfGUI extends xlvoGUI
         $xlvoConfFormGUI = new xlvoConfFormGUI($this);
         $xlvoConfFormGUI->setValuesByPost();
         if ($xlvoConfFormGUI->saveObject()) {
-           // ilUtil::sendSuccess($this->txt('msg_success'), true);
-
-            global $DIC;
-            $message = $DIC->ui()->factory()->messageBox()->success($this->txt('msg_success'));
-            $DIC->ui()->renderer()->render($message);
-
+            ilLiveVotingPlugin::sendSuccess($this->txt('msg_success'), true);
             self::dic()->ctrl()->redirect($this, self::CMD_STANDARD);
         }
         self::dic()->ui()->mainTemplate()->setContent($xlvoConfFormGUI->getHTML());
