@@ -165,5 +165,3 @@ class ilLiveVotingPlugin extends ilRepositoryObjectPlugin
         $DIC->ui()->renderer()->render($message);
     }
 }
-
-}

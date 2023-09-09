@@ -220,7 +220,7 @@ class ilObjLiveVotingGUI extends ilObjectPluginGUI implements ilDesktopItemHandl
     /**
      *
      */
-    public function performCommand(string $cmd) : void
+    public function performCommand(string $cmd = null) : void
     {
         self::dic()->help()->setScreenIdComponent(ilLiveVotingPlugin::PLUGIN_ID);
 

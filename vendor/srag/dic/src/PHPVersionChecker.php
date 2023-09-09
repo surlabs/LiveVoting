@@ -71,7 +71,7 @@ final class PHPVersionChecker
                 if (file_exists($composer_file)) {
                     $composer = json_decode(file_get_contents($composer_file));
 
-                    if (is_object($composer) && is_object($composer->require) && isset ($composer->require->php) && is_string($composer->require->php)) {
+                    if (is_object($composer) && is_object($composer->require) && isset ($composer->require->php) ) {
                         $php = $composer->require->php;
 
                         $matches = [];

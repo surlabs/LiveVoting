@@ -127,9 +127,6 @@ class xlvoCache extends ilGlobalCache implements xlvoCacheService, Initialisable
             case self::TYPE_MEMCACHED:
                 return ilMemcache::class;
                 break;
-            //case self::TYPE_XCACHE:
-               // return ilXcache::class;
-                //break;
             case self::TYPE_STATIC:
                 return ilStaticCache::class;
                 break;
