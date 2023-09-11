@@ -122,10 +122,6 @@ final class ParamManager
     private function loadBaseClassIfNecessary()
     {
         $baseClass = filter_input(INPUT_GET, "baseClass");
-
-        if (empty($baseClass)) {
-            self::dic()->ctrl()->initBaseClass(ilUIPluginRouterGUI::class);
-        }
     }
 
 

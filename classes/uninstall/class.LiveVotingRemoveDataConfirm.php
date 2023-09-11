@@ -3,14 +3,14 @@
 require_once __DIR__ . "/../../vendor/autoload.php";
 
 use LiveVoting\Utils\LiveVotingTrait;
-use srag\RemovePluginDataConfirm\LiveVoting\AbstractRemovePluginDataConfirm;
+use srag\RemovePluginDataConfirm\LiveVoting\RemovePluginDataConfirmCtrl;
 
 /**
  * Class LiveVotingRemoveDataConfirm
  *
  * @ilCtrl_isCalledBy LiveVotingRemoveDataConfirm: ilUIPluginRouterGUI
  */
-class LiveVotingRemoveDataConfirm extends AbstractRemovePluginDataConfirm
+class LiveVotingRemoveDataConfirm extends RemovePluginDataConfirmCtrl
 {
 
     use LiveVotingTrait;
