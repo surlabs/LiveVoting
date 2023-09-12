@@ -367,7 +367,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function fetchAssoc($query_result) :array|null
+    public function fetchAssoc($query_result) :?array
     {
         return $this->db->fetchAssoc($query_result);
     }
@@ -376,7 +376,7 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function fetchObject($query_result): null |\stdClass
+    public function fetchObject($query_result): ?\stdClass
     {
         return $this->db->fetchObject($query_result);
     }
