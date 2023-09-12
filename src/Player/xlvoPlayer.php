@@ -311,9 +311,9 @@ class xlvoPlayer extends CachingActiveRecord
     /**
      * @return string
      */
-    public function getQuestionTypeClassName()
+    public function getQuestionTypeClassName(): string
     {
-        return xlvoQuestionTypes::getClassName($this->getActiveVotingId());
+        return xlvoQuestionTypes::getClassName($this->getCurrentVotingObject()->getVotingType());
     }
 
 

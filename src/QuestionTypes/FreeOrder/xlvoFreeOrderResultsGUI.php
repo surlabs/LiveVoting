@@ -35,7 +35,7 @@ class xlvoFreeOrderResultsGUI extends xlvoCorrectOrderResultsGUI
             $json_decode = json_decode($xlvoVote->getFreeInput(), true);
             if (is_array($json_decode)) {
                 foreach ($json_decode as $option_id) {
-                    $option_weight[$option_id] = $option_weight[$option_id] + $option_amount2;
+                    $option_weight[$option_id] = (array_key_exists($option_id, $option_weight) ? [$option_id] : 0) + $option_amount2;
                     $option_amount2--;
                 }
             }

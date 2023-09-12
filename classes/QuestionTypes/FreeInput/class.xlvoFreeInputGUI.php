@@ -224,7 +224,7 @@ class xlvoFreeInputGUI extends xlvoQuestionTypesGUI
         $b->setId(self::BUTTON_CATEGORIZE);
         $b->setUrl('#');
 
-        if ($this->getButtonsStates()[self::BUTTON_CATEGORIZE] == 'true') {
+        if (array_key_exists(xlvoFreeInputGUI::BUTTON_CATEGORIZE, $this->getButtonsStates()) && $this->getButtonsStates()[self::BUTTON_CATEGORIZE] == 'true') {
             $b->setCaption(GlyphGUI::get('folder-close') . '&nbsp' . self::plugin()->translate('categorize_done', 'btn'), false);
         } else {
             $b->setCaption(GlyphGUI::get('folder-open') . '&nbsp' . self::plugin()->translate('categorize', 'btn'), false);
@@ -240,7 +240,7 @@ class xlvoFreeInputGUI extends xlvoQuestionTypesGUI
      */
     public function handleButtonCall($button_id, $data)
     {
-        $data = $this->getButtonsStates()[self::BUTTON_CATEGORIZE] == 'true' ? 'false' : 'true';
+        $data = (array_key_exists(xlvoFreeInputGUI::BUTTON_CATEGORIZE,  $this->getButtonsStates()) && $this->getButtonsStates()[self::BUTTON_CATEGORIZE] == 'true' )? 'false' : 'true';
         $this->saveButtonState($button_id, $data);
     }
 

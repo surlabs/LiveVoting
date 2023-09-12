@@ -32,7 +32,7 @@ class xlvoRbacSystem
      *
      * @return    boolean                    returns true if ALL passed operations are given, otherwise false
      */
-    public function checkAccess($a_operations, $a_ref_id, $a_type = "")
+    public function checkAccess($a_operations, $a_ref_id, $a_type = "") : bool
     {
         return false;
     }

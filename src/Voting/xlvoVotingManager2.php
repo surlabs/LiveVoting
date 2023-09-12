@@ -129,6 +129,7 @@ class xlvoVotingManager2
      */
     public function vote($option = null)
     {
+        $vote_id = null;
         $xlvoOption = xlvoOption::findOrGetInstance($option);
         if ($this->hasUserVotedForOption($xlvoOption)) {
             $this->unvote($option);
@@ -579,8 +580,8 @@ class xlvoVotingManager2
         $xlvoVotingConfig = xlvoVotingConfig::find($this->obj_id);
 
         if ($xlvoVotingConfig instanceof xlvoVotingConfig) {
-            $xlvoVotingConfig->setSelfVote((bool) $_GET['preview']);
-            $xlvoVotingConfig->setKeyboardActive((bool) $_GET['key']);
+            $xlvoVotingConfig->setSelfVote(isset($_GET['preview']) ? (bool) $_GET['preview'] : false);
+            $xlvoVotingConfig->setKeyboardActive(isset($_GET['key']) ? (bool) $_GET['key'] : false);
 
             return $xlvoVotingConfig;
         } else {

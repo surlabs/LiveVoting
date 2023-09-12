@@ -123,7 +123,7 @@ class xlvoCorrectOrderGUI extends xlvoQuestionTypesGUI
         $states = $this->getButtonsStates();
         $b = ilLinkButton::getInstance();
         $b->setId(self::BUTTON_TOTTLE_DISPLAY_CORRECT_ORDER);
-        if ($states[self::BUTTON_TOTTLE_DISPLAY_CORRECT_ORDER]) {
+        if (array_key_exists(self::BUTTON_TOTTLE_DISPLAY_CORRECT_ORDER,$states) && $states[self::BUTTON_TOTTLE_DISPLAY_CORRECT_ORDER]) {
             $b->setCaption(GlyphGUI::get('eye-close'), false);
         } else {
             $b->setCaption(GlyphGUI::get('eye-open'), false);
@@ -131,7 +131,7 @@ class xlvoCorrectOrderGUI extends xlvoQuestionTypesGUI
 
         $t = ilLinkButton::getInstance();
         $t->setId(self::BUTTON_TOGGLE_PERCENTAGE);
-        if ($states[self::BUTTON_TOGGLE_PERCENTAGE]) {
+        if (array_key_exists(self::BUTTON_TOGGLE_PERCENTAGE,$states) && $states[self::BUTTON_TOGGLE_PERCENTAGE]) {
             $t->setCaption(' %', false);
         } else {
             $t->setCaption(GlyphGUI::get('user'), false);
@@ -148,7 +148,7 @@ class xlvoCorrectOrderGUI extends xlvoQuestionTypesGUI
     {
         $states = $this->getButtonsStates();
 
-        return ((bool) $states[xlvoCorrectOrderGUI::BUTTON_TOTTLE_DISPLAY_CORRECT_ORDER] && $this->manager->getPlayer()->isShowResults());
+        return ((bool) array_key_exists(xlvoCorrectOrderGUI::BUTTON_TOTTLE_DISPLAY_CORRECT_ORDER,$states) && $this->manager->getPlayer()->isShowResults());
     }
 
 
@@ -159,7 +159,7 @@ class xlvoCorrectOrderGUI extends xlvoQuestionTypesGUI
     public function handleButtonCall($button_id, $data)
     {
         $states = $this->getButtonsStates();
-        $this->saveButtonState($button_id, !$states[$button_id]);
+        $this->saveButtonState($button_id, !(array_key_exists($button_id,$states) && $states[$button_id]));
     }
 
 

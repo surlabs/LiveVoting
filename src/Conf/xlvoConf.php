@@ -242,7 +242,13 @@ class xlvoConf extends CachingActiveRecord
             $url = self::getConfig(self::F_BASE_URL_VOTE);
             $url = rtrim($url, "/") . "/";
         } else {
-            $str = strstr(ILIAS_HTTP_PATH, 'Customizing', true);
+            if(strpos(ILIAS_HTTP_PATH, 'Customizing') === false) {
+                $str = ILIAS_HTTP_PATH;
+            }
+            else {
+                $str = strstr(ILIAS_HTTP_PATH, 'Customizing', true);
+            }
+
             $url = rtrim($str, "/") . "/";
         }
 
@@ -258,6 +264,8 @@ class xlvoConf extends CachingActiveRecord
     public static function getFullApiURL()
     {
         return self::getBaseVoteURL() . ltrim(self::API_URL, "./");
+       // return self::getBaseVoteURL() . "ilias.php";
+        //return "ilias.php";
     }
 
 

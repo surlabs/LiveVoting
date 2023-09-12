@@ -90,7 +90,7 @@ class xlvoCorrectOrderResultsGUI extends xlvoSingleVoteResultsGUI
     {
         $states = $this->getButtonsStates();
 
-        return ((bool) $states[xlvoCorrectOrderGUI::BUTTON_TOTTLE_DISPLAY_CORRECT_ORDER] && $this->manager->getPlayer()->isShowResults());
+        return ((bool) (array_key_exists(xlvoCorrectOrderGUI::BUTTON_TOTTLE_DISPLAY_CORRECT_ORDER,$states) && $states[xlvoCorrectOrderGUI::BUTTON_TOTTLE_DISPLAY_CORRECT_ORDER]) && $this->manager->getPlayer()->isShowResults());
     }
 
 
@@ -101,6 +101,6 @@ class xlvoCorrectOrderResultsGUI extends xlvoSingleVoteResultsGUI
     {
         $states = $this->getButtonsStates();
 
-        return ($this->manager->getPlayer()->isShowResults() && (bool) $states[xlvoCorrectOrderGUI::BUTTON_TOGGLE_PERCENTAGE]);
+        return ($this->manager->getPlayer()->isShowResults() && (bool) (array_key_exists(xlvoCorrectOrderGUI::BUTTON_TOGGLE_PERCENTAGE,$states) && $states[xlvoCorrectOrderGUI::BUTTON_TOGGLE_PERCENTAGE]));
     }
 }

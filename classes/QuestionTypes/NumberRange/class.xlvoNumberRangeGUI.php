@@ -114,7 +114,7 @@ class xlvoNumberRangeGUI extends xlvoQuestionTypesGUI
         $template->setVariable('SLIDER_MIN', $this->getStart());
         $template->setVariable('SLIDER_MAX', $this->getEnd());
         $template->setVariable('SLIDER_STEP', $this->getStep());
-        if ($userVotes[0] instanceof xlvoVote) {
+        if (!empty($userVotes) && $userVotes[0] instanceof xlvoVote) {
             $user_has_voted = true;
             $value = (int) $userVotes[0]->getFreeInput();
         } else {

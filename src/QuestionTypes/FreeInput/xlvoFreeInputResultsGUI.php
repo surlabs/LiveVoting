@@ -42,7 +42,7 @@ class xlvoFreeInputResultsGUI extends xlvoInputResultsGUI
     public function getHTML()
     {
         $button_states = $this->manager->getPlayer()->getButtonStates();
-        $this->edit_mode = ($button_states[xlvoFreeInputGUI::BUTTON_CATEGORIZE] == 'true');
+        $this->edit_mode = (array_key_exists(xlvoFreeInputGUI::BUTTON_CATEGORIZE, $button_states) && $button_states[xlvoFreeInputGUI::BUTTON_CATEGORIZE] == 'true');
 
         $tpl = self::plugin()->template('default/QuestionTypes/FreeInput/tpl.free_input_results.html');
 

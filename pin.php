@@ -15,21 +15,14 @@ use LiveVoting\Context\Param\ParamManager;
 use LiveVoting\Context\xlvoContext;
 use LiveVoting\Pin\xlvoPin;
 use srag\DIC\LiveVoting\DICStatic;
-use LiveVoting\User\xlvoUser;
-use LiveVoting\Context\xlvoInitialisation;
 
 try {
 	$pin = trim(filter_input(INPUT_GET, ParamManager::PARAM_PIN), "/");
 
-    ilInitialisation::initILIAS();
-    xlvoUser::getInstance()->setIdentifier(session_id())->setType(xlvoUser::TYPE_PIN);
-    xlvoInitialisation::initUIFramework(DICStatic::dic()->dic());
-
-   // InitialisationManager::startMinimal();
+    InitialisationManager::startMinimal();
 
 	xlvoContext::setContext(xlvoContext::CONTEXT_PIN);
 
-	//DICStatic::dic()->ctrl()->initBaseClass(ilUIPluginRouterGUI::class);
 	DICStatic::dic()->ctrl()->setTargetScript(xlvoConf::getFullApiURL());
 
 	if (!empty($pin)) {
