@@ -101,8 +101,7 @@ class xlvoSingleVoteResultsGUI extends xlvoInputResultsGUI
     protected function isShowAbsolute()
     {
         $states = $this->getButtonsStates();
-
-        return ($this->manager->getPlayer()->isShowResults() && (bool) $states[xlvoSingleVoteGUI::BUTTON_TOGGLE_PERCENTAGE]);
+        return ($this->manager->getPlayer()->isShowResults() && (bool) in_array(xlvoSingleVoteGUI::BUTTON_TOGGLE_PERCENTAGE,$states));
     }
 
 

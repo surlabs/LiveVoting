@@ -54,7 +54,7 @@ use ilTimeZone;
 use ilToolbarGUI;
 use ilTree;
 use ilUIFramework;
-use ilUtil;
+use iGlUtil;
 use LiveVoting\Conf\xlvoConf;
 use LiveVoting\Context\Param\ParamManager;
 use LiveVoting\Context\xlvoContext;
@@ -69,6 +69,13 @@ use LiveVoting\Utils\LiveVotingTrait;
 use srag\DIC\LiveVoting\DICTrait;
 use InitCtrlService;
 use InitComponentService;
+use ILIAS\Data;
+use ILIAS\Setup;
+use ilRbacSystem;
+use ilRbacReview;
+use ilObjectDefinition;
+use InitResourceStorage;
+use ilUtil;
 
 /**
  * Class xlvoBasicInitialisation for ILIAS 7
@@ -130,20 +137,18 @@ class xlvoBasicInitialisation
         $this->initLog(); //<-- required for ilCtrl error messages
         $this->initSessionHandler();
         $this->initSettings();  //required
-        $this->initAccessHandling();
-        //$this->buildHTTPPath();
-        $this->initHTTPServices($GLOBALS["DIC"]);
         $this->initLocale();
-        $this->initLanguage();
+        $this->buildHTTPPath();
+        $this->initHTTPServices($GLOBALS["DIC"]);
         $this->initCore();
-        $this->initDataCache();
-        $this->initObjectDefinition();
+        $this->initUser();
+        $this->initLanguage();
+        $this->initTree();
         $this->initComponentService($GLOBALS["DIC"]);
         $this->initControllFlow();
-        $this->initUser();
-        $this->initPluginAdmin();
+        $this->initAccessHandling();
+        $this->initObjectDefinition();
         $this->initAccess();
-        $this->initTree();
         $this->initAppEventHandler();
         $this->initMail();
         $this->initFilesystem();
@@ -153,7 +158,6 @@ class xlvoBasicInitialisation
         $this->initTabs();
         $this->initNavigationHistory();
         $this->initHelp();
-        $this->initMainMenu();
         xlvoInitialisation::initUIFramework(self::dic()->dic());
     }
 
@@ -198,7 +202,7 @@ class xlvoBasicInitialisation
             'Customizing/global/plugins/Services/Repository/RepositoryObject/LiveVoting', "DEFAULT", true);
 
         $param_manager = ParamManager::getInstance();
-        //$tpl = self::plugin()->template("default/tpl.main.html");
+
         if (!$param_manager->getPuk()) {
             $tpl->touchBlock("navbar");
         }
@@ -510,7 +514,7 @@ class xlvoBasicInitialisation
 
             // dirname cuts the last directory from a directory path e.g content/classes return content
 
-            $module = ilUtil::removeTrailingPathSeparators(ILIAS_MODULE);
+            $module = \ilFileUtils::removeTrailingPathSeparators(ILIAS_MODULE);
 
             $dirs = explode('/', $module);
             $uri = $path;
@@ -520,9 +524,8 @@ class xlvoBasicInitialisation
         }
 
         $https->enableSecureCookies();
-        $https->checkPort();
 
-        return define('ILIAS_HTTP_PATH', ilUtil::removeTrailingPathSeparators($protocol . $host . $uri));
+        return define('ILIAS_HTTP_PATH', \ilFileUtils::removeTrailingPathSeparators($protocol . $host . $uri));
     }
 
     /**
@@ -569,7 +572,8 @@ class xlvoBasicInitialisation
      */
     private function initObjectDefinition()
     {
-        $this->makeGlobal("objDefinition", new xlvoObjectDefinition());
+    //    $this->makeGlobal("objDefinition", new xlvoObjectDefinition());
+        $this->makeGlobal("objDefinition", new ilObjectDefinition());
     }
 
     private function initControllFlow()
@@ -633,6 +637,7 @@ class xlvoBasicInitialisation
             }
             $this->il_plugin_active = ["robj" => array_filter($this->il_plugin_active["robj"], fn(array $plugin) : bool => $plugin["plugin_id"] === ilLiveVotingPlugin::PLUGIN_ID)];
         }, ilCachedComponentData::getInstance(), ilCachedComponentData::class)();
+
         $this->makeGlobal("ilPluginAdmin", new ilPluginAdmin());
     }
 
@@ -744,9 +749,15 @@ class xlvoBasicInitialisation
     private function initAccessHandling()
     {
         // thisone we can mock
-        $this->makeGlobal('rbacreview', new xlvoRbacReview());
+        global $DIC;
 
-        $rbacsystem = new xlvoRbacSystem();
+        $ilObjDataCache = new ilObjectDataCache();
+        $this->makeGlobal('ilObjDataCache', $ilObjDataCache);
+
+        $rbacreview = new ilRbacReview();
+        $this->makeGlobal('rbacreview', $rbacreview);
+
+        $rbacsystem = ilRbacSystem::getInstance();
         $this->makeGlobal("rbacsystem", $rbacsystem);
     }
 
@@ -763,7 +774,7 @@ class xlvoBasicInitialisation
      */
     private function initTree()
     {
-        $this->makeGlobal('tree', new ilTree(ROOT_FOLDER_ID));
+        $this->makeGlobal('tree', new ilTree(intval(ROOT_FOLDER_ID),intval(ROOT_FOLDER_ID)));
     }
 
     /**
@@ -853,7 +864,7 @@ class xlvoBasicInitialisation
         $this->makeGlobal("mail.mime.transport.factory",
             new ilMailMimeTransportFactory(self::dic()->settings(), self::dic()->appEventHandler()));
 
-        $this->makeGlobal("mail.mime.sender.factory", new ilMailMimeSenderFactory(self::dic()->settings()));
+        $this->makeGlobal("mail.mime.sender.factory", new ilMailMimeSenderFactory(self::dic()->settings(),intval(ANONYMOUS_USER_ID)));
     }
 
     /**
@@ -880,20 +891,8 @@ class xlvoBasicInitialisation
     {
         global $DIC;
 
-        $DIC['resource_storage'] = static function (Container $c) : \ILIAS\ResourceStorage\Services {
-            return new \ILIAS\ResourceStorage\Services(
-                new StorageHandlerFactory([
-                    new MaxNestingFileSystemStorageHandler($c['filesystem.storage'], Location::STORAGE),
-                    new FileSystemStorageHandler($c['filesystem.storage'], Location::STORAGE)
-                ]),
-                new RevisionARRepository(),
-                new ResourceARRepository(),
-                new InformationARRepository(),
-                new StakeholderARRepository(),
-                new LockHandlerilDB($c->database()),
-                new ilFileServicesPolicy([], [])
-            );
-        };
+        $initResourceStorage = new InitResourceStorage();
+        $initResourceStorage->init($DIC);
     }
 
     protected static function initComponentService(\ILIAS\DI\Container $container): void
@@ -904,6 +903,6 @@ class xlvoBasicInitialisation
 
     protected static function initCore(): void
     {
-        $GLOBALS["DIC"]["ilias.version"] = (new ILIAS\Data\Factory())->version(ILIAS_VERSION_NUMERIC);
+        $GLOBALS["DIC"]["ilias.version"] = (new \ILIAS\Data\Factory())->version(ILIAS_VERSION_NUMERIC);
     }
 }

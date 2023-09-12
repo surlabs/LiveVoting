@@ -514,7 +514,7 @@ class xlvoBasicInitialisation
 
             // dirname cuts the last directory from a directory path e.g content/classes return content
 
-            $module = ilUtil::removeTrailingPathSeparators(ILIAS_MODULE);
+            $module = \ilFileUtils::removeTrailingPathSeparators(ILIAS_MODULE);
 
             $dirs = explode('/', $module);
             $uri = $path;

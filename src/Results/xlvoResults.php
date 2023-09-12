@@ -80,6 +80,10 @@ class xlvoResults
          * @var xlvoParticipant[] $participants
          */
         $votings = $votingRecords->get();
+        foreach ($votings as $voting) {
+            $voting->afterObjectLoad();
+        }
+
         $round_id = $this->getRoundId();
         $participants = xlvoParticipants::getInstance($obj_id)->getParticipantsForRound($round_id, $filter['participant']);
         $data = array();

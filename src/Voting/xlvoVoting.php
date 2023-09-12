@@ -194,7 +194,7 @@ class xlvoVoting extends CachingActiveRecord
      * @db_fieldtype        integer
      * @db_length           1
      */
-    protected $alt_result_display_mode;
+    protected ?int $alt_result_display_mode = null;
     /**
      * @var bool
      *
@@ -202,7 +202,7 @@ class xlvoVoting extends CachingActiveRecord
      * @db_fieldtype        integer
      * @db_length           1
      */
-    protected $randomise_option_sequence = 0;
+    protected ?int $randomise_option_sequence = 0;
     /**
      * @var xlvoOption[]
      */

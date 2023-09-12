@@ -172,6 +172,7 @@ class xlvoVoter2GUI extends xlvoGUI
         } else {
             self::dic()->ui()->mainTemplate()->setContent($tpl->get());
         }
+       // $this->getHTML();
     }
 
 

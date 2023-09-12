@@ -10,6 +10,7 @@ use LiveVoting\QuestionTypes\xlvoSubFormGUI;
 use srag\CustomInputGUIs\LiveVoting\MultiLineNewInputGUI\MultiLineNewInputGUI;
 use srag\CustomInputGUIs\LiveVoting\TextInputGUI\TextInputGUI;
 use srag\CustomInputGUIs\LiveVoting\HiddenInputGUI\HiddenInputGUI;
+use arFactory;
 
 /**
  * Class xlvoFreeOrderSubFormGUI
@@ -66,12 +67,21 @@ class xlvoFreeOrderSubFormGUI extends xlvoSubFormGUI
                     /**
                      * @var xlvoOption $xlvoOption
                      */
-                    $xlvoOption = xlvoOption::findOrGetInstance($item[self::F_ID]);
+                    if(($item[self::F_ID] === null || trim($item[self::F_ID]) === '')){
+                        $class_name = xlvoOption::class;
+                        $xlvoOption = arFactory::getInstance($class_name);
+                        $xlvoOption->storeObjectToCache();
+                    }
+                    else{
+                        $xlvoOption = xlvoOption::findOrGetInstance($item[self::F_ID]);
+                    }
+
                     $xlvoOption->setText($element->stripSlashesAddSpaceFallback($item[self::F_TEXT]));
                     $xlvoOption->setStatus(xlvoOption::STAT_ACTIVE);
                     $xlvoOption->setVotingId($this->getXlvoVoting()->getId());
                     $xlvoOption->setPosition($pos);
-                    $xlvoOption->setCorrectPosition($item[self::F_WEIGHT]);
+                    //$xlvoOption->setCorrectPosition($item[self::F_WEIGHT]);
+                    $xlvoOption->setCorrectPosition($pos);
                     $xlvoOption->setType($this->getXlvoVoting()->getVotingType());
                     $this->options[] = $xlvoOption;
                     $pos++;

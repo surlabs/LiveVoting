@@ -49,7 +49,7 @@ class xlvoOption extends CachingActiveRecord
      * @db_fieldtype        text
      * @db_length           256
      */
-    protected ?string $text;
+    protected $text;
 
 
     /**

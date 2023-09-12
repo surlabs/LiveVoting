@@ -17,7 +17,7 @@ use LiveVoting\Context\InitialisationManager;
 use LiveVoting\Context\xlvoContext;
 use srag\DIC\LiveVoting\DICStatic;
 
-/*
+
  $context = xlvoContext::getContext();
 switch ($context) {
 	case xlvoContext::CONTEXT_PIN:
@@ -30,8 +30,6 @@ switch ($context) {
 		//TODO: catch error if user used the go to link but has no ilias authentication. Atm the error handling page is shown.
 		break;
 }
- */
-ilInitialisation::initILIAS();
 
 xlvoConf::load();
 

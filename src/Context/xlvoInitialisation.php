@@ -278,12 +278,6 @@ class xlvoInitialisation extends ilInitialisation
         );
 
         self::initGlobal(
-            "ilBrowser",
-            "ilBrowser",
-            "./Services/Utilities/classes/class.ilBrowser.php"
-        );
-
-        self::initGlobal(
             "ilHelp",
             "ilHelpGUI",
             "Services/Help/classes/class.ilHelpGUI.php"
@@ -308,11 +302,6 @@ class xlvoInitialisation extends ilInitialisation
         );
 
         if (ilContext::hasUser()) {
-            include_once './Services/MainMenu/classes/class.ilMainMenuGUI.php';
-            $ilMainMenu = new ilMainMenuGUI("_top");
-
-            self::initGlobal("ilMainMenu", $ilMainMenu);
-            unset($ilMainMenu);
 
             // :TODO: tableGUI related
 

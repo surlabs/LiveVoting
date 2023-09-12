@@ -22,6 +22,7 @@ use srag\CustomInputGUIs\LiveVoting\TextInputGUI\TextInputGUI;
 use srag\DIC\LiveVoting\DICTrait;
 use xlvoVotingGUI;
 use ILIAS\DI\Container;
+use ilHtmlPurifierFactory;
 
 /**
  * Class xlvoVotingFormGUI
@@ -92,8 +93,7 @@ class xlvoVotingFormGUI extends ilPropertyFormGUI
 
         $this->voting = $xlvoVoting;
         $this->parent_gui = $parent_gui;
-        $this->is_new = ($this->voting->getId() == 0);
-
+        $this->is_new = ($this->voting->getId() == '' || $this->voting->getId() == 0);
 
         $this->initForm();
     }
@@ -146,6 +146,7 @@ class xlvoVotingFormGUI extends ilPropertyFormGUI
             'img',
         ));
         $te->usePurifier(false);
+        $te->setPurifier(ilHtmlPurifierFactory::getInstanceByType('frm_post'));
         $te->disableButtons(array(
             'charmap',
             'undo',
