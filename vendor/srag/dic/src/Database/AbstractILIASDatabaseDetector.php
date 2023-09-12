@@ -169,9 +169,9 @@ abstract class AbstractILIASDatabaseDetector implements DatabaseInterface
     /**
      * @inheritDoc
      */
-    public function connect($return_false_on_error = false) :bool| null
+    public function connect($return_false_on_error = false) :bool
     {
-        return $this->connect($return_false_on_error);
+        return $this->db->connect($return_false_on_error);
     }
 
 
