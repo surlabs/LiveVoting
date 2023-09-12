@@ -425,9 +425,17 @@ class xlvoVoting extends CachingActiveRecord
          * @var xlvoOption[] $xlvoOptions
          * @var xlvoOption   $first_voting_option
          */
-        $xlvoOptions = xlvoOption::where(array('voting_id' => $this->id))->orderBy('position')->get();
+        $cmdClass = self::dic()->ctrl()->getCmdClass();
+        if($cmdClass == "xlvoVoter2GUI"){
+            $xlvoOptions = xlvoOption::where(array('voting_id' => $this->id))->orderBy('position')->get();
+            $first_voting_option = xlvoOption::where(array('voting_id' => $this->id))->orderBy('position')->first();
+        }
+        else{
+            $xlvoOptions = xlvoOption::where(array('voting_id' => $this->id))->orderBy('correct_position, position')->get();
+            $first_voting_option = xlvoOption::where(array('voting_id' => $this->id))->orderBy('correct_position, position')->first();
+        }
+
         $this->setVotingOptions($xlvoOptions);
-        $first_voting_option = xlvoOption::where(array('voting_id' => $this->id))->orderBy('position')->first();
         $this->setFirstVotingOption($first_voting_option);
     }
 

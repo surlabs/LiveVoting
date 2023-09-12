@@ -108,10 +108,7 @@ class xlvoCorrectOrderSubFormGUI extends xlvoSubFormGUI
                     $xlvoOption->setStatus(xlvoOption::STAT_ACTIVE);
                     $xlvoOption->setVotingId($this->getXlvoVoting()->getId());
                     $xlvoOption->setPosition($pos);
-                    if (!$this->getXlvoVoting()->getRandomiseOptionSequence()) {
-                        // Correct position can only be inputed if not shuffle*/
-                        $xlvoOption->setCorrectPosition($id);
-                    }
+                    $xlvoOption->setCorrectPosition($id);
                     $xlvoOption->setType($this->getXlvoVoting()->getVotingType());
                     $this->options[] = $xlvoOption;
                     $pos++;
@@ -188,10 +185,10 @@ class xlvoCorrectOrderSubFormGUI extends xlvoSubFormGUI
 
         //randomize the order on save
         if ($this->getXlvoVoting()->getRandomiseOptionSequence()) {
-            /*// First set correct position in the sequence of user has ordered
+            // First set correct position in the sequence of user has ordered
             foreach ($this->options as $i => $option) {
                 $option->setCorrectPosition($option->getPosition());
-            }*/
+            }
             // Then shuffle positions
             $this->randomiseOptionPosition($this->options);
         }

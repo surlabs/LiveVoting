@@ -69,7 +69,7 @@ class xlvoNumberRangeSubFormGUI extends xlvoSubFormGUI
         $displayMode->addOption(new ilRadioOption($this->txt('display_mode_nr_'
             . xlvoNumberRangeResultsGUI::DISPLAY_MODE_BARS), xlvoNumberRangeResultsGUI::DISPLAY_MODE_BARS));
 
-        $displayMode->setValue($this->getXlvoVoting()->getAltResultDisplayMode());
+        $displayMode->setValue(strval($this->getXlvoVoting()->getAltResultDisplayMode() ?? ""));
 
         //create start range number input
         $startRange = new ilNumberInputGUI($this->txt(self::OPTION_RANGE_START), self::OPTION_RANGE_START);
