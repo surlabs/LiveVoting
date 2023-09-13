@@ -57,7 +57,7 @@ class xlvoDummyUser54 extends ilObjUser implements xlvoDummyUser
      *
      * @return bool         Returns constant false.
      */
-    public function getPref($preference): null|string
+    public function getPref($preference): ?string
     {
         return false;
     }
