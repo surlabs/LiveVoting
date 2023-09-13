@@ -56,6 +56,8 @@ use LiveVoting\Session\xlvoSessionHandler;
 use LiveVoting\Utils\LiveVotingTrait;
 use srag\DIC\LiveVoting\DICTrait;
 use LiveVoting\Context\xlvoDummyUser6;
+use ILIAS\GlobalScreen\Services;
+use ilGSProviderFactory;
 
 /**
  * Class xlvoBasicInitialisation for ILIAS 6
@@ -111,6 +113,8 @@ class xlvoBasicInitialisation
     {
         //bootstrap ILIAS
 
+        echo file_put_contents( "/var/www/html/ilias/tmp" . "/" . "debug.txt", "v7/bootstrapApp" . "\n",FILE_APPEND);
+
         $this->initDependencyInjection();
         $this->setCookieParams();
 
@@ -119,6 +123,7 @@ class xlvoBasicInitialisation
         $this->requireCommonIncludes();
         $this->initErrorHandling();
         $this->determineClient();
+        $this->initHTTPServices();
         $this->loadClientIniFile();
         $this->initDatabase();
         $this->initLog(); //<-- required for ilCtrl error messages
@@ -126,7 +131,6 @@ class xlvoBasicInitialisation
         $this->initSettings();  //required
         $this->initAccessHandling();
         $this->buildHTTPPath();
-        $this->initHTTPServices();
         $this->initLocale();
         $this->initLanguage();
         $this->initDataCache();
@@ -823,18 +827,31 @@ class xlvoBasicInitialisation
      *
      */
     private function initGlobalScreen() {
+        /*
         Closure::bind(function(Container $dic) {
             self::initGlobalScreen($dic);
         }, null, ilInitialisation::class)(self::dic()->dic());
+        */
+        $c['global_screen'] = function () use ($c) {
+            return new Services(
+                new ilGSProviderFactory($c),
+                $c->ui(),
+                htmlentities(str_replace([" ", ".", "-"], "_", ILIAS_VERSION_NUMERIC))
+            );
+        };
+        $c->globalScreen()->tool()->context()->stack()->clear();
+        $c->globalScreen()->tool()->context()->claim()->main();
     }
-
 
     /**
      *
      */
     private function initFilesystem() {
+        /*
         Closure::bind(function() {
             self::bootstrapFilesystems();
         }, null, ilInitialisation::class)();
+        */
+        ilInitialisation::bootstrapFilesystems();
     }
 }
