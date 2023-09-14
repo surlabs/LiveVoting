@@ -76,6 +76,8 @@ use ilRbacReview;
 use ilObjectDefinition;
 use InitResourceStorage;
 use ilUtil;
+use ILIAS\GlobalScreen\Services;
+use ilGSProviderFactory;
 
 /**
  * Class xlvoBasicInitialisation for ILIAS 7
@@ -124,14 +126,16 @@ class xlvoBasicInitialisation
     {
         //bootstrap ILIAS
 
+        file_put_contents( "/var/www/html/ilias/tmp" . "/" . "debug.txt", "v7/bootstrapApp" . "\n",FILE_APPEND);
+
         $this->initDependencyInjection();
         $this->setCookieParams();
-
         $this->removeUnsafeCharacters();
         $this->loadIniFile();
         $this->requireCommonIncludes();
         $this->initErrorHandling();
         $this->determineClient();
+        $this->initHTTPServices($GLOBALS["DIC"]);
         $this->loadClientIniFile();
         $this->initDatabase();
         $this->initLog(); //<-- required for ilCtrl error messages
@@ -139,7 +143,6 @@ class xlvoBasicInitialisation
         $this->initSettings();  //required
         $this->initLocale();
         $this->buildHTTPPath();
-        $this->initHTTPServices($GLOBALS["DIC"]);
         $this->initCore();
         $this->initUser();
         $this->initLanguage();
@@ -153,7 +156,7 @@ class xlvoBasicInitialisation
         $this->initMail();
         $this->initFilesystem();
         $this->initResourceStorage();
-        $this->initGlobalScreen();
+        $this->initGlobalScreen($GLOBALS["DIC"]);
         $this->initTemplate();
         $this->initTabs();
         $this->initNavigationHistory();
@@ -710,11 +713,18 @@ class xlvoBasicInitialisation
                 ilUtil::setCookie("ilClientId", $client_id);
             }
         }
-        if (!defined("IL_PHPUNIT_TEST")) {
+        if (!defined("IL_PHPUNIT_TEST") && isset($_COOKIE["ilClientId"])) {
             define("CLIENT_ID", $_COOKIE["ilClientId"]);
         } else {
-            define("CLIENT_ID", $_GET["client_id"]);
+            if (isset($_GET["client_id"])) {
+                define("CLIENT_ID", $_GET["client_id"]);
+            }
         }
+        if (!defined('CLIENT_ID') ) {
+            $default_client = $this->iliasIniFile->readVariable("clients", "default");
+            define("CLIENT_ID", $default_client);
+        }
+
     }
 
     /**
@@ -870,11 +880,23 @@ class xlvoBasicInitialisation
     /**
      *
      */
-    private function initGlobalScreen()
+    private function initGlobalScreen(Container $c)
     {
+        /*
         Closure::bind(function (Container $dic) {
             self::initGlobalScreen($dic);
         }, null, ilInitialisation::class)(self::dic()->dic());
+        */
+        $c['global_screen'] = function () use ($c) {
+            return new Services(
+                new ilGSProviderFactory($c),
+                $c->ui(),
+                htmlentities(str_replace([" ", ".", "-"], "_", ILIAS_VERSION_NUMERIC))
+            );
+        };
+        $c->globalScreen()->tool()->context()->stack()->clear();
+        $c->globalScreen()->tool()->context()->claim()->main();
+
     }
 
     /**
@@ -882,9 +904,12 @@ class xlvoBasicInitialisation
      */
     private function initFilesystem()
     {
+        /*
         Closure::bind(function () {
             self::bootstrapFilesystems();
         }, null, ilInitialisation::class)();
+ */
+        ilInitialisation::bootstrapFilesystems();
     }
 
     protected function initResourceStorage() : void
