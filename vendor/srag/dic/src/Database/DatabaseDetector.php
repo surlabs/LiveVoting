@@ -214,4 +214,10 @@ class DatabaseDetector extends AbstractILIASDatabaseDetector
             return $primary_key_value;
         }
     }
+
+    public function primaryExistsByFields(string $table_name, array $fields): bool
+    {
+        // TODO: Implement primaryExistsByFields() method.
+        return false;
+    }
 }
