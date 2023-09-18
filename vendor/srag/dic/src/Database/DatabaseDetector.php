@@ -225,4 +225,10 @@ class DatabaseDetector extends AbstractILIASDatabaseDetector
         return true;
         // TODO: Implement migrateTableCollation() method.
     }
+
+    public function primaryExistsByFields(string $table_name, array $fields): bool
+    {
+        // TODO: Implement primaryExistsByFields() method.
+        return false;
+    }
 }
