@@ -184,15 +184,14 @@ class xlvoFreeInputGUI extends xlvoQuestionTypesGUI
             //$form->addCommandButton(self::CMD_CLEAR, $this->txt('delete_all'));
         }
 
-        $mli = new ilTextInputGUI($this->txt('answers'), self::F_VOTE_MULTI_LINE_INPUT);
-        $mli->setMulti(true,false,true);
-        /*
+        $mli = new MultiLineNewInputGUI($this->txt('answers'), self::F_VOTE_MULTI_LINE_INPUT);
         $te = $this->getTextInputGUI($this->txt('text'), self::F_FREE_INPUT);
 
         $hi2 = new HiddenInputGUI(self::F_VOTE_ID);
         $mli->addInput($te);
-        $mli->addInput($hi2);*/
+        $mli->addInput($hi2);
 
+        $form->addItem($mli);
         $array = array();
         foreach ($xlvoVotes as $xlvoVote) {
             $array[] = array(
@@ -200,8 +199,6 @@ class xlvoFreeInputGUI extends xlvoQuestionTypesGUI
                 self::F_VOTE_ID    => $xlvoVote->getId(),
             );
         }
-        $mli->setMultiValues($array);
-        $form->addItem($mli);
 
         $form->setValuesByArray(array(self::F_VOTE_MULTI_LINE_INPUT => $array));
         $form->addCommandButton(self::CMD_SUBMIT, $this->txt('send'));

@@ -641,6 +641,7 @@ class xlvoVoting extends CachingActiveRecord
      */
     public function getFirstVotingOption()
     {
+        $this->afterObjectLoad();
         return $this->first_voting_option;
     }
 
