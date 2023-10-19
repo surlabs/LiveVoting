@@ -11,6 +11,8 @@ use srag\CustomInputGUIs\LiveVoting\MultiLineNewInputGUI\MultiLineNewInputGUI;
 use srag\CustomInputGUIs\LiveVoting\TextInputGUI\TextInputGUI;
 use srag\CustomInputGUIs\LiveVoting\HiddenInputGUI\HiddenInputGUI;
 use arFactory;
+use ilTextInputGUI;
+
 
 /**
  * Class xlvoFreeOrderSubFormGUI
@@ -37,7 +39,7 @@ class xlvoFreeOrderSubFormGUI extends xlvoSubFormGUI
      */
     protected function initFormElements()
     {
-        $xlvoMultiLineInputGUI = new MultiLineNewInputGUI($this->txt(self::F_OPTIONS), self::F_OPTIONS);
+/*        $xlvoMultiLineInputGUI = new MultiLineNewInputGUI($this->txt(self::F_OPTIONS), self::F_OPTIONS);
         $xlvoMultiLineInputGUI->setShowInputLabel(false);
         $xlvoMultiLineInputGUI->setShowSort(true);
 
@@ -48,7 +50,20 @@ class xlvoFreeOrderSubFormGUI extends xlvoSubFormGUI
 
         $xlvoMultiLineInputGUI->addInput($te);
 
+        $this->addFormElement($xlvoMultiLineInputGUI);*/
+
+        $xlvoMultiLineInputGUI = new MultiLineNewInputGUI($this->txt(self::F_OPTIONS), self::F_OPTIONS);
+        $xlvoMultiLineInputGUI->setShowInputLabel(false);
+        $xlvoMultiLineInputGUI->setShowSort(true);
+
+        $h = new HiddenInputGUI(self::F_ID);
+        $xlvoMultiLineInputGUI->addInput($h);
+
+        $xlvoMultiLineInputGUI = new ilTextInputGUI($this->txt(self::F_OPTIONS), self::F_OPTIONS);
+        $xlvoMultiLineInputGUI->setMulti(true,true,true);
+
         $this->addFormElement($xlvoMultiLineInputGUI);
+
     }
 
 
@@ -63,20 +78,21 @@ class xlvoFreeOrderSubFormGUI extends xlvoSubFormGUI
         switch ($element->getPostVar()) {
             case self::F_OPTIONS:
                 $pos = 1;
-                foreach ($value as $item) {
+                foreach ($value as $item=>$id) {
                     /**
                      * @var xlvoOption $xlvoOption
                      */
-                    if(($item[self::F_ID] === null || trim($item[self::F_ID]) === '')){
+
+                    if(($id === null || trim($id) === '')){
                         $class_name = xlvoOption::class;
                         $xlvoOption = arFactory::getInstance($class_name);
                         $xlvoOption->storeObjectToCache();
                     }
                     else{
-                        $xlvoOption = xlvoOption::findOrGetInstance($item[self::F_ID]);
+                        $xlvoOption = xlvoOption::findOrGetInstance($id);
                     }
 
-                    $xlvoOption->setText($element->stripSlashesAddSpaceFallback($item[self::F_TEXT]));
+                    $xlvoOption->setText($element->stripSlashesAddSpaceFallback($id));
                     $xlvoOption->setStatus(xlvoOption::STAT_ACTIVE);
                     $xlvoOption->setVotingId($this->getXlvoVoting()->getId());
                     $xlvoOption->setPosition($pos);
@@ -101,20 +117,24 @@ class xlvoFreeOrderSubFormGUI extends xlvoSubFormGUI
      */
     protected function getFieldValue(ilFormPropertyGUI $element)
     {
+
         switch ($element->getPostVar()) {
             case self::F_OPTIONS:
-                $array = [];
+                $array = array();
                 /**
                  * @var xlvoOption $option
                  */
                 $options = $this->getXlvoVoting()->getVotingOptions();
                 foreach ($options as $option) {
-                    $array[] = array(
+                   /* $array[] = array(
                         self::F_ID       => $option->getId(),
                         self::F_TEXT     => $option->getTextForEditor(),
                         self::F_POSITION => $option->getPosition(),
                         self::F_WEIGHT   => $option->getCorrectPosition(),
-                    );
+                    );*/
+                    $array[$option->getId()] = $option->getTextForEditor();
+
+
                 }
 
                 return $array;
@@ -130,6 +150,7 @@ class xlvoFreeOrderSubFormGUI extends xlvoSubFormGUI
      */
     protected function handleOptions()
     {
+
         $ids = array();
         foreach ($this->options as $xlvoOption) {
             $xlvoOption->setVotingId($this->getXlvoVoting()->getId());
@@ -137,6 +158,8 @@ class xlvoFreeOrderSubFormGUI extends xlvoSubFormGUI
             $ids[] = $xlvoOption->getId();
         }
         $options = $this->getXlvoVoting()->getVotingOptions();
+
+
 
         foreach ($options as $xlvoOption) {
             if (!in_array($xlvoOption->getId(), $ids)) {

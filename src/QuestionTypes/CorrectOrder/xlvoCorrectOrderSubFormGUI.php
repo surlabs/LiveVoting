@@ -55,35 +55,19 @@ class xlvoCorrectOrderSubFormGUI extends xlvoSubFormGUI
         $xlvoMultiLineInputGUI->setShowInputLabel(false);
         $xlvoMultiLineInputGUI->setShowSort(false);
 
-        $randomiseOptionSequenceAfterSave = new ilCheckboxInputGUI($this->txt(self::OPTION_RANDOMIZE_OPTIONS_AFTER_SAVE), self::OPTION_RANDOMIZE_OPTIONS_AFTER_SAVE);
-        $randomiseOptionSequenceAfterSave->setOptionTitle($this->txt(self::OPTION_RANDOMIZE_OPTIONS_AFTER_SAVE_INFO));
-        //$xlvoMultiLineInputGUI->setPositionMovable(true); // Allow move position
-        $randomiseOptionSequenceAfterSave->setChecked($this->getXlvoVoting()->getRandomiseOptionSequence()); // Should shuffled?
+        //To recovery custom order
+        //$randomiseOptionSequenceAfterSave = new ilCheckboxInputGUI($this->txt(self::OPTION_RANDOMIZE_OPTIONS_AFTER_SAVE), self::OPTION_RANDOMIZE_OPTIONS_AFTER_SAVE);
+        //$randomiseOptionSequenceAfterSave->setOptionTitle($this->txt(self::OPTION_RANDOMIZE_OPTIONS_AFTER_SAVE_INFO));
+        //$randomiseOptionSequenceAfterSave->setChecked($this->getXlvoVoting()->getRandomiseOptionSequence()); // Should shuffled?
 
         $h = new HiddenInputGUI(self::F_ID);
         $xlvoMultiLineInputGUI->addInput($h);
 
+
         $xlvoMultiLineInputGUI = new ilTextInputGUI($this->txt(self::F_OPTIONS), self::F_OPTIONS);
         $xlvoMultiLineInputGUI->setMulti(true,true,true);
 
-
-        /*if (!$this->getXlvoVoting()->getRandomiseOptionSequence()) {
-            // Allow input correct position if not shuffled
-        $position = new ilNumberInputGUI($this->txt('option_correct_position'), self::F_CORRECT_POSITION);
-        $position->setRequired(true);
-        $position->setMinValue(1);
-        $position->setSize(2);
-        $position->setMaxLength(2);
-        /*} else {
-            // Only display correct order as text if shuffled
-            $position = new ilNonEditableValueGUI("", self::F_CORRECT_POSITION, true);
-        }
-        $xlvoMultiLineInputGUI->addInput($position);
-
-        $te = new TextInputGUI($this->txt('option_text'), self::F_TEXT);
-        $xlvoMultiLineInputGUI->addInput($te);*/
-
-        $this->addFormElement($randomiseOptionSequenceAfterSave);
+        //$this->addFormElement($randomiseOptionSequenceAfterSave);
         $this->addFormElement($xlvoMultiLineInputGUI);
     }
 
@@ -113,14 +97,17 @@ class xlvoCorrectOrderSubFormGUI extends xlvoSubFormGUI
                     $this->options[] = $xlvoOption;
                     $pos++;
                 }
+
                 break;
-            case self::OPTION_RANDOMIZE_OPTIONS_AFTER_SAVE:
+            /*case self::OPTION_RANDOMIZE_OPTIONS_AFTER_SAVE:
                 $value = boolval($value);
                 $this->getXlvoVoting()->setRandomiseOptionSequence($value);
-                break;
+                break;*/
             default:
                 throw new ilException('Unknown element can not set the value.');
         }
+        $value = boolval($value);
+        $this->getXlvoVoting()->setRandomiseOptionSequence($value);
     }
 
 
@@ -154,8 +141,8 @@ class xlvoCorrectOrderSubFormGUI extends xlvoSubFormGUI
                 }
 
                 return $array;
-            case self::OPTION_RANDOMIZE_OPTIONS_AFTER_SAVE:
-                return $this->getXlvoVoting()->getRandomiseOptionSequence();
+           /* case self::OPTION_RANDOMIZE_OPTIONS_AFTER_SAVE:
+                return $this->getXlvoVoting()->getRandomiseOptionSequence();*/
             default:
                 throw new ilException('Unknown element can not get the value.');
                 break;
