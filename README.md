@@ -1,14 +1,14 @@
 # LiveVoting
 
-![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/fluxapps/livevoting?style=flat-square)
-![GitHub closed issues](https://img.shields.io/github/issues-closed/fluxapps/livevoting?style=flat-square&color=success)
-[![GitHub issues](https://img.shields.io/github/issues/fluxapps/livevoting?style=flat-square&color=yellow)](https://github.com/fluxapps/livevoting/issues)
-![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/fluxapps/livevoting?style=flat-square&color=success)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/fluxapps/livevoting?style=flat-square&color=yellow)
-[![GitHub forks](https://img.shields.io/github/forks/fluxapps/livevoting?style=flat-square&color=blueviolet)](https://github.com/fluxapps/livevoting/network)
-[![GitHub stars](https://img.shields.io/github/stars/fluxapps/livevoting?style=flat-square&color=blueviolet)](https://github.com/fluxapps/livevoting/stargazers)
-[![GitHub license](https://img.shields.io/github/license/fluxapps/livevoting?style=flat-square)](https://github.com/fluxapps/livevoting/blob/main/LICENSE.md)
+**This is a fork created by SURLABS of the FLUXLABS' LiveVoting Plugin for ILIAS**
 
+*This version is valid for ILIAS8 with PHP 7.4 and 8.0*
+
+*SURLABS is not responsible for the plugin*
+
+**Some of this document's Features might not be implemented in this version for ILIAS8**
+
+*To report issue, please use Mantis (https://mantis.ilias.de/)*
 
 ## Features
 
@@ -26,7 +26,7 @@
  
 ## Documentation
 
-https://github.com/fluxapps/LiveVoting/blob/master/doc/Documentation.pdf
+https://github.com/surlabs/LiveVoting/blob/master/doc/Documentation.pdf
  
 ## Installation
 
@@ -35,7 +35,7 @@ Start at your ILIAS root directory
 ```bash
 mkdir -p Customizing/global/plugins/Services/Repository/RepositoryObject
 cd Customizing/global/plugins/Services/Repository/RepositoryObject
-git clone https://github.com/fluxapps/LiveVoting.git LiveVoting
+git clone https://github.com/surlabs/LiveVoting.git LiveVoting
 ```
 As ILIAS administrator go to "Administration->Plugins" and install/activate the plugin.  
 
@@ -51,22 +51,11 @@ Config Rewrite Rule in .htaccess or Apache-Config:
 </IfModule>
 ```
 
-## PowerPoint export
+## PowerPoint export (NOT TESTED IN ILIAS8)
 For display the exported PowerPoint files you need to install the WebViewer-AddIn in PowerPoint:
 https://appsource.microsoft.com/en-us/product/office/WA104295828?tab=Overview
 You need also to configure your website as HTTPS and allow that your website can be displayed in frames.
 
 ## Rebuild & Maintenance
 fluxlabs ag, support@fluxlabs.ch
-
-This project needs a proof of concept
-
-Would you like to participate?
-Take advantage of the crowdfunding opportunity under [discussions](https://github.com/fluxapps/LiveVoting/discussions/37).
-
-
-## About fluxlabs plugins
-
-Please also have a look at our other key projects and their [MAINTENANCE](https://github.com/fluxapps/docs/blob/8ce4309b0ac64c039d29204c2d5b06723084c64b/assets/MAINTENANCE.png).
-
-The plugins that require a rebuild and the costs are listed here: [REBUILDS](https://github.com/fluxapps/docs/blob/8ce4309b0ac64c039d29204c2d5b06723084c64b/assets/REBUILDS.png)
+surlabs sl, info@surlabs.es
