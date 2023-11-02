@@ -240,6 +240,24 @@ class xlvoVotingFormGUI extends ilPropertyFormGUI
             return false;
         }
 
+        $type = $this->is_new ? $this->getInput('type') : $this->voting->getVotingType();
+
+        if(($type == "1" || $type == "4" || $type == "5") && is_array($this->getInput('options'))){
+            $valid = true;
+            foreach ($this->getInput('options') as $key => $value) {
+                if($value == ""){
+                    $valid = false;
+                }
+            }
+
+            if(!$valid){
+                global $DIC;
+                $txt = $DIC->language()->txt("form_input_not_valid");
+                $this->global_tpl->setOnScreenMessage('failure', $txt);
+                return false;
+            }
+        }
+
         if ($this->is_new) {
             $this->voting->setVotingType($this->getInput('type'));
         }
@@ -257,7 +275,6 @@ class xlvoVotingFormGUI extends ilPropertyFormGUI
             return true;
         } catch (xlvoSubFormGUIHandleFieldException $ex) {
            // ilLiveVotingPlugin::sendFailure($ex->getMessage(), true);
-
             global $DIC;
             $message = $DIC->ui()->factory()->messageBox()->failure($ex->getMessage());
             $DIC->ui()->renderer()->render($message);
