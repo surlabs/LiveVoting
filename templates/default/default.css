@@ -148,6 +148,12 @@ span.xlvo-label-url {
 .hidden-xs {
   display: none !important;
 }
+
+.il-logo .hidden-xs{
+  display:block !important;
+}
+
+
 .alert-danger {
   margin-top: 50px !important;
 }
