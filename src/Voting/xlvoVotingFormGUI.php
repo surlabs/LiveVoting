@@ -229,7 +229,16 @@ class xlvoVotingFormGUI extends ilPropertyFormGUI
      */
     public function fillObject()
     {
+        GLOBAL $DIC;
         if (!$this->checkInput()) {
+            return false;
+        }
+        //Get the type from the form if it is a new voting
+        $type = $this->is_new ? $this->getInput('type') : $this->voting->getVotingType();
+
+        if(($type == "1" || $type == "4" || $type == "5") && !is_array($this->getInput('options'))){
+            $txt = $DIC->language()->txt("form_input_not_valid");
+            ilUtil::sendFailure($txt);
             return false;
         }
 
