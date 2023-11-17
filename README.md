@@ -15,7 +15,7 @@
 - multiple/single/correct order/priorisation choice vote
 - anonymous voting
 - live updates
-- pin acces via http://iliasdomain.tdl/vote
+- pin acces
 - vote and unvote
 - show/hide live results
 - Freeze Voting
@@ -23,10 +23,6 @@
 - Presenter link
 - Export PowerPoint with slides for each questions with presenter link
 - Presentation of Number range
- 
-## Documentation
-
-https://github.com/surlabs/LiveVoting/blob/master/doc/Documentation.pdf
  
 ## Installation
 
@@ -57,5 +53,4 @@ https://appsource.microsoft.com/en-us/product/office/WA104295828?tab=Overview
 You need also to configure your website as HTTPS and allow that your website can be displayed in frames.
 
 ## Rebuild & Maintenance
-fluxlabs ag, support@fluxlabs.ch
-surlabs sl, info@surlabs.es
+This project is maintained by Surlabs S.L. info@surlabs.es
