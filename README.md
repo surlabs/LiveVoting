@@ -4,7 +4,6 @@
 
 *This version is valid for ILIAS8 with PHP 7.4 and 8.0*
 
-*SURLABS is not responsible for the plugin*
 
 **Some of this document's Features might not be implemented in this version for ILIAS8**
 
