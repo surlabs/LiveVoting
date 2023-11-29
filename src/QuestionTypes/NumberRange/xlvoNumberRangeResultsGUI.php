@@ -78,8 +78,9 @@ class xlvoNumberRangeResultsGUI extends xlvoInputResultsGUI
         $values = [];
         $modes = [];
 
-        array_walk($votes, function (xlvoVote $vote) use (&$vote_sum, &$values, &$modes) {q
+        array_walk($votes, function (xlvoVote $vote) use (&$vote_sum, &$values, &$modes) {
             $value = (int) $vote->getFreeInput();
+
             $values[] = $value;
             if (!isset($modes[$value])) {
                 $modes[$value] = 0;
