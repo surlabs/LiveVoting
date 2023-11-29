@@ -291,10 +291,11 @@ class xlvoVoting extends CachingActiveRecord
         }
         $newObj->store();
         if ($clone_options) {
-            foreach ($newObj->getVotingOptions() as $votingOption) {
+            foreach ($this->getVotingOptions() as $votingOption) {
                 $votingOptionNew = $votingOption->copy();
                 $votingOptionNew->setVotingId($newObj->getId());
                 $votingOptionNew->store();
+
             }
             $newObj->regenerateOptionSorting();
         }
