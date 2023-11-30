@@ -305,28 +305,18 @@ class xlvoInitialisation extends ilInitialisation
 
             // :TODO: tableGUI related
 
-            // set hits per page for all lists using table module
-            $_GET['limit'] = (int) $ilUser->getPref('hits_per_page');
-            ilSession::set('tbl_limit', $_GET['limit']);
+            // Define local variables for limit and offset
+            $limit = (int) $ilUser->getPref('hits_per_page');
+            $offset = isset($_GET['offset']) && $_GET['offset'] !== "" ? (int) $_GET['offset'] : null;
 
-            // the next line makes it impossible to save the offset somehow in a session for
-            // a specific table (I tried it for the user administration).
-            // its not posssible to distinguish whether it has been set to page 1 (=offset = 0)
-            // or not set at all (then we want the last offset, e.g. being used from a session var).
-            // So I added the wrapping if statement. Seems to work (hopefully).
-            // Alex April 14th 2006
-            if (isset($_GET['offset']) && $_GET['offset'] != "") {							// added April 14th 2006
-                $_GET['offset'] = (int) $_GET['offset'];		// old code
-            }
+            // Set hits per page for all lists using table module using a session variable instead of directly modifying $_GET
+            ilSession::set('tbl_limit', $limit);
 
-            // leads to error in live voting
-//            self::initGlobal("lti", "ilLTIViewGUI", "./Services/LTI/classes/class.ilLTIViewGUI.php");
-//            $GLOBALS["DIC"]["lti"]->init();
-//            self::initKioskMode($GLOBALS["DIC"]);
         } else {
             // several code parts rely on ilObjUser being always included
             include_once "Services/User/classes/class.ilObjUser.php";
         }
+
     }
 
     /**
