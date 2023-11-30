@@ -235,13 +235,11 @@ class xlvoVotingFormGUI extends ilPropertyFormGUI
      */
     public function fillObject()
     {
-
         if (!$this->checkInput()) {
             return false;
         }
 
         $type = $this->is_new ? $this->getInput('type') : $this->voting->getVotingType();
-
         if(($type == "1" || $type == "4" || $type == "5") && is_array($this->getInput('options'))){
             $valid = true;
             foreach ($this->getInput('options') as $key => $value) {

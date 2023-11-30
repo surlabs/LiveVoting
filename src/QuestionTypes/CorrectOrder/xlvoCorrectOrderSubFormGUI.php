@@ -55,19 +55,31 @@ class xlvoCorrectOrderSubFormGUI extends xlvoSubFormGUI
         $xlvoMultiLineInputGUI->setShowInputLabel(false);
         $xlvoMultiLineInputGUI->setShowSort(false);
 
-        //To recovery custom order
-        //$randomiseOptionSequenceAfterSave = new ilCheckboxInputGUI($this->txt(self::OPTION_RANDOMIZE_OPTIONS_AFTER_SAVE), self::OPTION_RANDOMIZE_OPTIONS_AFTER_SAVE);
-        //$randomiseOptionSequenceAfterSave->setOptionTitle($this->txt(self::OPTION_RANDOMIZE_OPTIONS_AFTER_SAVE_INFO));
-        //$randomiseOptionSequenceAfterSave->setChecked($this->getXlvoVoting()->getRandomiseOptionSequence()); // Should shuffled?
+        $randomiseOptionSequenceAfterSave = new ilCheckboxInputGUI($this->txt(self::OPTION_RANDOMIZE_OPTIONS_AFTER_SAVE), self::OPTION_RANDOMIZE_OPTIONS_AFTER_SAVE);
+        $randomiseOptionSequenceAfterSave->setOptionTitle($this->txt(self::OPTION_RANDOMIZE_OPTIONS_AFTER_SAVE_INFO));
+        //$xlvoMultiLineInputGUI->setPositionMovable(true); // Allow move position
+        $randomiseOptionSequenceAfterSave->setChecked($this->getXlvoVoting()->getRandomiseOptionSequence()); // Should shuffled?
 
         $h = new HiddenInputGUI(self::F_ID);
         $xlvoMultiLineInputGUI->addInput($h);
 
+        /*if (!$this->getXlvoVoting()->getRandomiseOptionSequence()) {
+            // Allow input correct position if not shuffled*/
+        $position = new ilNumberInputGUI($this->txt('option_correct_position'), self::F_CORRECT_POSITION);
+        $position->setRequired(true);
+        $position->setMinValue(1);
+        $position->setSize(2);
+        $position->setMaxLength(2);
+        /*} else {
+            // Only display correct order as text if shuffled
+            $position = new ilNonEditableValueGUI("", self::F_CORRECT_POSITION, true);
+        }*/
+        $xlvoMultiLineInputGUI->addInput($position);
 
-        $xlvoMultiLineInputGUI = new ilTextInputGUI($this->txt(self::F_OPTIONS), self::F_OPTIONS);
-        $xlvoMultiLineInputGUI->setMulti(true,true,true);
+        $te = new TextInputGUI($this->txt('option_text'), self::F_TEXT);
+        $xlvoMultiLineInputGUI->addInput($te);
 
-        //$this->addFormElement($randomiseOptionSequenceAfterSave);
+        $this->addFormElement($randomiseOptionSequenceAfterSave);
         $this->addFormElement($xlvoMultiLineInputGUI);
     }
 
@@ -80,34 +92,41 @@ class xlvoCorrectOrderSubFormGUI extends xlvoSubFormGUI
      */
     protected function handleField(ilFormPropertyGUI $element, $value)
     {
+        GLOBAL $DIC;
         switch ($element->getPostVar()) {
             case self::F_OPTIONS:
                 $pos = 1;
-                foreach ($value as $id => $item) {
+                if(!isset($value) || !is_array($value)){
+                    $DIC->ui()->mainTemplate()->setOnScreenMessage('failure', $DIC->language()->txt("form_input_not_valid_key_missing", 'options'));
+                    break;
+                }
+
+                foreach ($value as $item) {
                     /**
                      * @var xlvoOption $xlvoOption
                      */
-                    $xlvoOption = xlvoOption::findOrGetInstance($id);
-                    $xlvoOption->setText($element->stripSlashesAddSpaceFallback($item));
+                    $xlvoOption = xlvoOption::findOrGetInstance($item[self::F_ID]);
+                    $xlvoOption->setText($element->stripSlashesAddSpaceFallback($item[self::F_TEXT]));
                     $xlvoOption->setStatus(xlvoOption::STAT_ACTIVE);
                     $xlvoOption->setVotingId($this->getXlvoVoting()->getId());
                     $xlvoOption->setPosition($pos);
-                    $xlvoOption->setCorrectPosition($id);
-                    $xlvoOption->setType($this->getXlvoVoting()->getVotingType());
-                    $this->options[] = $xlvoOption;
-                    $pos++;
-                }
+                    $xlvoOption->setCorrectPosition($item[self::F_CORRECT_POSITION]);
 
+                    $xlvoOption->setType($this->getXlvoVoting()->getVotingType());
+
+                    $this->options[] = clone $xlvoOption;
+
+                    $pos++;
+
+                }
                 break;
-            /*case self::OPTION_RANDOMIZE_OPTIONS_AFTER_SAVE:
+            case self::OPTION_RANDOMIZE_OPTIONS_AFTER_SAVE:
                 $value = boolval($value);
                 $this->getXlvoVoting()->setRandomiseOptionSequence($value);
-                break;*/
+                break;
             default:
                 throw new ilException('Unknown element can not set the value.');
         }
-        $value = boolval($value);
-        $this->getXlvoVoting()->setRandomiseOptionSequence($value);
     }
 
 
@@ -130,19 +149,22 @@ class xlvoCorrectOrderSubFormGUI extends xlvoSubFormGUI
         }
         switch ($element->getPostVar()) {
             case self::F_OPTIONS:
-                $array = array();
-                $this->xlvoVoting->afterObjectLoad();
-                /**
-                 * @var xlvoOption $option
-                 */
-                $options = $this->getXlvoVoting()->getVotingOptions();
-                foreach ($options as $option) {
-                    $array[$option->getId()] = $option->getTextForEditor();
+                $array = [];
+                foreach ($this->options as $option) {
+                    $array[] = [
+                        self::F_ID               => $option->getId(),
+                        self::F_TEXT             => $option->getTextForEditor(),
+                        self::F_POSITION         => $option->getPosition(),
+                        self::F_CORRECT_POSITION => /*($this->getXlvoVoting()->getRandomiseOptionSequence() ? "<br>" : "")
+							. */
+                            $option->getCorrectPosition()/* . ($this->getXlvoVoting()->getRandomiseOptionSequence() ? "." : "")
+						// Display as text whit dot and break if shuffled otherwise only position for input*/
+                    ];
                 }
 
                 return $array;
-           /* case self::OPTION_RANDOMIZE_OPTIONS_AFTER_SAVE:
-                return $this->getXlvoVoting()->getRandomiseOptionSequence();*/
+            case self::OPTION_RANDOMIZE_OPTIONS_AFTER_SAVE:
+                return $this->getXlvoVoting()->getRandomiseOptionSequence();
             default:
                 throw new ilException('Unknown element can not get the value.');
                 break;
@@ -162,7 +184,6 @@ class xlvoCorrectOrderSubFormGUI extends xlvoSubFormGUI
             $ids[] = $xlvoOption->getId();
         }
         $options = $this->getXlvoVoting()->getVotingOptions();
-        $this->xlvoVoting->afterObjectLoad();
 
         foreach ($options as $xlvoOption) {
             if (!in_array($xlvoOption->getId(), $ids)) {
@@ -172,17 +193,14 @@ class xlvoCorrectOrderSubFormGUI extends xlvoSubFormGUI
 
         //randomize the order on save
         if ($this->getXlvoVoting()->getRandomiseOptionSequence()) {
-            // First set correct position in the sequence of user has ordered
-            foreach ($this->options as $i => $option) {
-                $option->setCorrectPosition($option->getPosition());
-            }
-            // Then shuffle positions
             $this->randomiseOptionPosition($this->options);
+
         }
 
         foreach ($this->options as $option) {
             $option->store();
         }
+
 
         $this->getXlvoVoting()->setMultiFreeInput(true);
         $this->getXlvoVoting()->store();
@@ -226,16 +244,18 @@ class xlvoCorrectOrderSubFormGUI extends xlvoSubFormGUI
      * Searches an option within the given option array by position.
      *
      * @param xlvoOption[] $options  The options which should be used to search the position.
-     * @param int          $position The position which should be searched for.
+     * @param int $position The position which should be searched for.
      *
      * @return xlvoOption
      * @throws InvalidArgumentException Thrown if the position is not found within the given options.
      */
-    private function findOptionByPosition(array &$options, $position)
+    private function findOptionByPosition(array &$options, int $position)
     {
         foreach ($options as $option) {
+
             if ($option->getPosition() === $position) {
                 return $option;
+
             }
         }
 

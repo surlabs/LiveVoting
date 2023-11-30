@@ -126,7 +126,7 @@ class xlvoBasicInitialisation
     {
         //bootstrap ILIAS
 
-        file_put_contents( "/var/www/html/ilias/tmp" . "/" . "debug.txt", "v7/bootstrapApp" . "\n",FILE_APPEND);
+        //file_put_contents( "/var/www/html/ilias/tmp" . "/" . "debug.txt", "v7/bootstrapApp" . "\n",FILE_APPEND);
 
         $this->initDependencyInjection();
         $this->setCookieParams();

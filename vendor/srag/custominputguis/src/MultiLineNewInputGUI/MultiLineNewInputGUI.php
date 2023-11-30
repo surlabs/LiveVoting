@@ -106,25 +106,42 @@ class MultiLineNewInputGUI extends ilFormPropertyGUI implements ilTableFilterIte
     /**
      * @inheritDoc
      */
-    public function checkInput() : bool
+    public function checkInput(): bool
     {
+        global $DIC;
+        $http = $DIC->http();
         $ok = true;
+
+        $originalPost = $http->request()->getParsedBody();
+
+        if(count($this->getInputs($this->getRequired()))==0 || $this->getInputs($this->getRequired())==null){
+            $DIC->ui()->mainTemplate()->setOnScreenMessage('failure', $DIC->language()->txt("form_input_not_valid_key_missing", 'options'));
+            $ok = false;
+        }
 
         foreach ($this->getInputs($this->getRequired()) as $i => $inputs) {
             foreach ($inputs as $org_post_var => $input) {
-                $b_value = $_POST[$input->getPostVar()];
 
-                $_POST[$input->getPostVar()] = $_POST[$this->getPostVar()][$i][$org_post_var];
+                $post_var = $input->getPostVar();
+                $parent_post_var = $this->getPostVar();
 
-                /*if ($this->getRequired()) {
-                   $input->setRequired(true);
-               }*/
 
-                if (!$input->checkInput()) {
+                $b_value = $originalPost[$post_var] ?? null;
+                if (isset($originalPost[$parent_post_var]) &&
+                    is_array($originalPost[$parent_post_var]) &&
+                    isset($originalPost[$parent_post_var][$i]) &&
+                    is_array($originalPost[$parent_post_var][$i]) &&
+                    array_key_exists($org_post_var, $originalPost[$parent_post_var][$i])) {
+                    $originalPost[$post_var] = $originalPost[$parent_post_var][$i][$org_post_var];
+                } else {
                     $ok = false;
+                    $DIC->ui()->mainTemplate()->setOnScreenMessage('failure', $DIC->language()->txt("form_input_not_valid_key_missing", 'options', $i));
+                    return false;
                 }
 
-                $_POST[$input->getPostVar()] = $b_value;
+                $http->request()->withParsedBody($originalPost);
+                 $originalPost[$post_var] = $b_value;
+                $http->request()->withParsedBody($originalPost);
             }
         }
 
@@ -133,7 +150,8 @@ class MultiLineNewInputGUI extends ilFormPropertyGUI implements ilTableFilterIte
         if ($ok) {
             return true;
         } else {
-            //$this->setAlert(self::dic()->language()->txt("form_input_not_valid"));
+
+            $DIC->ui()->mainTemplate()->setOnScreenMessage('failure', $DIC->language()->txt("form_input_not_valid"));
 
             return false;
         }
@@ -375,6 +393,10 @@ class MultiLineNewInputGUI extends ilFormPropertyGUI implements ilTableFilterIte
      */
     public function setValueByArray(/*array*/ $values) : void
     {
-        $this->setValue($values[$this->getPostVar()]);
+
+        if(isset($values[$this->getPostVar()])){
+            $this->setValue($values[$this->getPostVar()]);
+
+        }
     }
 }
