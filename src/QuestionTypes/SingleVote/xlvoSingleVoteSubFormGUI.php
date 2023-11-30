@@ -48,7 +48,7 @@ class xlvoSingleVoteSubFormGUI extends xlvoSubFormGUI
         //		$this->addFormElement($cb);
 
         $xlvoMultiLineInputGUI = new ilTextInputGUI($this->txt(self::F_OPTIONS), self::F_OPTIONS);
-        $xlvoMultiLineInputGUI->setMulti(true,false,true);
+        $xlvoMultiLineInputGUI->setMulti(true,true,true);
         /*
         $xlvoMultiLineInputGUI->setShowInputLabel(false);
 
