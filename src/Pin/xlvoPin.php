@@ -140,11 +140,14 @@ class xlvoPin
             $xlvoVotingConfig = xlvoVotingConfig::find($config->id); //relay on ar connector cache
         }
 
-        $param_manager = ParamManager::getInstance();
+        $ref_id = trim(filter_input(INPUT_GET, "ref_id"), "/");
+        if(empty($ref_id)){
+            $ref_id = $config->id;
+        }
 
         //check pin
         if ($xlvoVotingConfig instanceof xlvoVotingConfig) {
-            if (!$xlvoVotingConfig->isObjOnline() && !ilObjLiveVotingAccess::hasWriteAccess($param_manager->getRefId(), $DIC->user()->getId())) {
+            if (!$xlvoVotingConfig->isObjOnline() && !ilObjLiveVotingAccess::hasWriteAccess($ref_id, $DIC->user()->getId())) {
                 if ($safe_mode) {
                     throw new xlvoVoterException('The voting is currently offline.', xlvoVoterException::VOTING_OFFLINE);
                 }

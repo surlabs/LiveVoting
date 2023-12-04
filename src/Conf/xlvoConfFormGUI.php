@@ -175,14 +175,13 @@ class xlvoConfFormGUI extends ilPropertyFormGUI
             $key = $item->getPostVar();
             $config = Config::findOrGetInstance($key);
 
-            var_dump($config->getArray());
             return $config->getArray();
 
-            if (self::checkForSubItem($item)) {
+          /*  if (self::checkForSubItem($item)) {
                 foreach ($item->getSubItems() as $subitem) {
                     $this->getValuesForItem($subitem, $array);
                 }
-            }
+            }*/
         }
 
         return $array;
