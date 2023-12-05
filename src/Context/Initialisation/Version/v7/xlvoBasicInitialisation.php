@@ -11,7 +11,7 @@ use ilAccess;
 use ilAppEventHandler;
 use ilBenchmark;
 use ilCachedComponentData;
-use ilCtrl;
+//use ilCtrl;
 use ilDBWrapperFactory;
 use ilErrorHandling;
 use ilGlobalCache;
