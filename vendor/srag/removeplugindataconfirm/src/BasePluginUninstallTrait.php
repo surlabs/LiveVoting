@@ -18,9 +18,7 @@ trait BasePluginUninstallTrait
 
     use DICTrait;
 
-    /**
-     * @inheritDoc
-     */
+    /*
     protected function updateDatabase() : int
     {
         if ($this->shouldUseOneUpdateStepOnly()) {
@@ -28,7 +26,7 @@ trait BasePluginUninstallTrait
         }
 
         return (int) parent::updateDatabase();
-    }
+    }*/
 
 
     /**
