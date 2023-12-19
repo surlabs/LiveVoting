@@ -58,7 +58,7 @@ class xlvoResultsTableGUI extends ilTable2GUI
 
     protected function buildColumns()
     {
-        $this->addColumn(self::plugin()->translate('common_position'), 'position', '1%');
+        $this->addColumn(self::plugin()->translate('common_position'), 'position', '10%');
         $this->addColumn(self::plugin()->translate('common_user'), 'user', '10%');
         $this->addColumn(self::plugin()->translate('voting_title'), 'title', '15%');
         $this->addColumn(self::plugin()->translate('common_question'), 'question', '20%');
