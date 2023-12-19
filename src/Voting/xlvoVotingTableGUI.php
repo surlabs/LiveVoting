@@ -227,7 +227,7 @@ class xlvoVotingTableGUI extends ilTable2GUI
                 case 'voting_status':
 
                 case 'voting_type':
-                    if ($filter_value > -1) {
+                    if ($filter_value != "") {
                         $collection = $collection->where(array($filter_key => $filter_value));
                     }
                     break;
