@@ -449,11 +449,10 @@ class xlvoVotingGUI
              * @var xlvoVoting $xlvoVoting
              */
             $xlvoVoting = xlvoVoting::find($_GET[self::IDENTIFIER]);
-
             if ($xlvoVoting->getObjId() == $this->getObjId()) {
 
                 ilLiveVotingPlugin::sendQuestion($this->txt('confirm_reset'), true);
-                /*
+
                 $confirm = new ilConfirmationGUI();
                 $confirm->addItem(self::IDENTIFIER, $xlvoVoting->getId(), $xlvoVoting->getTitle());
                 $confirm->setHeaderText($this->txt('confirm_reset'));
@@ -462,7 +461,7 @@ class xlvoVotingGUI
                 $confirm->setConfirm($this->txt('reset'), self::CMD_RESET);
 
                 self::dic()->ui()->mainTemplate()->setContent($confirm->getHTML());
-                */
+
             } else {
                 ilLiveVotingPlugin::sendFailure($this->txt('permission_denied_object'), true);
                 self::dic()->ctrl()->redirect($this, self::CMD_STANDARD);
