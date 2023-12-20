@@ -312,3 +312,4 @@ btn_categorize_done#:#Finish categorizing
 btn_add_category#:#Add category
 btn_add_answer#:#Add input
 category_title#:#Category Title
+add_type_error#:#Please select a question type.

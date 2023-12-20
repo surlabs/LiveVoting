@@ -85,7 +85,8 @@ class xlvoQuestionTypes
     public static function getClassName($type)
     {
         if (!isset(self::$class_map[$type])) {
-            //			throw new xlvoVotingManagerException('Type not available');
+            //throw new xlvoVotingManagerException('Type not available');
+            self::dic()->ctrl()->redirectByClass("xlvoVotingGUI", 'showTypeError');
         }
 
         return self::$class_map[$type];

@@ -182,13 +182,16 @@ class xlvoVotingGUI
     /**
      *
      */
-    protected function selectType()
+    protected function selectType(bool $error = false)
     {
         if (!ilObjLiveVotingAccess::hasWriteAccess()) {
             ilLiveVotingPlugin::sendFailure(self::plugin()->translate('permission_denied_write'), true);
             self::dic()->ctrl()->redirect($this, self::CMD_STANDARD);
         } else {
             $form = new ilPropertyFormGUI();
+            if ($error) {
+                self::dic()->ui()->mainTemplate()->setOnScreenMessage('failure', self::plugin()->translate("add_type_error"));
+            }
             $form->setFormAction(self::dic()->ctrl()->getFormAction($this, self::CMD_ADD));
             $form->addCommandButton(self::CMD_ADD, $this->txt('select_type'));
             $form->addCommandButton(self::CMD_CANCEL, $this->txt('cancel'));
@@ -202,9 +205,12 @@ class xlvoVotingGUI
                 $cb->addOption($op);
             }
             $form->addItem($cb);
-
             self::dic()->ui()->mainTemplate()->setContent($form->getHTML());
         }
+    }
+
+    protected function showTypeError(){
+        $this->selectType(true);
     }
 
 

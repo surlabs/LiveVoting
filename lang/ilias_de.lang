@@ -311,3 +311,4 @@ btn_categorize_done#:#Kategorisieren beenden
 btn_add_category#:#Kategorie hinzufügen
 btn_add_answer#:#Eingabe hinzufügen
 category_title#:#Titel der Kategorie
+add_type_error#:#Bitte wählen Sie einen Typen aus.
