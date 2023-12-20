@@ -3,7 +3,7 @@
 require_once __DIR__ . "/vendor/srag/dic/src/PHPVersionChecker.php";
 
 $id = 'xlvo';
-$version = '2023.12.19';
+$version = '2023.12.20';
 $ilias_min_version = '8.0';
 $ilias_max_version = '8.999';
 $responsible = 'fluxlabs ag';
