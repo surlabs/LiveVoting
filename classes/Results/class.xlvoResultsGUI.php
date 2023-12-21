@@ -198,7 +198,7 @@ class xlvoResultsGUI extends xlvoGUI
         self::dic()->tabs()->setBackTarget(self::plugin()->translate('common_back'), self::dic()->ctrl()->getLinkTarget($this, self::CMD_SHOW));
 
         $user_id = $_GET['user_id'] ? $_GET['user_id'] : $_GET['user_identifier'];
-        $participants = xlvoParticipants::getInstance($this->obj_id)->getParticipantsForRound($this->round->getId(), $this->user_id);
+        $participants = xlvoParticipants::getInstance($this->obj_id)->getParticipantsForRound($this->round->getId(), $user_id);
         /** @var xlvoParticipant $participant */
         $participant = array_shift($participants);
 
