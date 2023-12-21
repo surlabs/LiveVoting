@@ -3,6 +3,7 @@
 namespace LiveVoting\Voter;
 
 use DateTime;
+use DateTimeZone;
 use LiveVoting\Cache\CachingActiveRecord;
 use LiveVoting\Conf\xlvoConf;
 use LiveVoting\User\xlvoUser;
@@ -44,6 +45,7 @@ class xlvoVoter extends CachingActiveRecord
 
     /**
      * @param $player_id
+     * @throws \Exception
      */
     public static function register($player_id)
     {
@@ -57,7 +59,9 @@ class xlvoVoter extends CachingActiveRecord
             $obj->setUserIdentifier(xlvoUser::getInstance()->getIdentifier());
             $obj->setPlayerId($player_id);
         }
-        $obj->setLastAccess(new DateTime());
+
+        $obj->setLastAccess(new DateTime('now', new DateTimeZone('Europe/Berlin')));
+
         $obj->store();
     }
 
@@ -81,8 +85,14 @@ class xlvoVoter extends CachingActiveRecord
             $delay = self::DEFAULT_CLIENT_UPDATE_DELAY;
         }
 
+        // Calculate the cutoff time taking into account the delay and an additional 50% of delay
+        $cutoff_time = time() - ($delay + $delay * 0.5);
+
+        // Format the cutoff time to match the format used in sleep (Y-m-d H:i:s)
+        $formatted_cutoff_time = date('Y-m-d H:i:s', $cutoff_time);
+
         return self::where(array('player_id' => $player_id))->where(array(
-            'last_access' => date(DATE_ATOM, time() - ($delay + $delay * 0.5))
+            'last_access' => $formatted_cutoff_time
         ), '>')->count();
     }
 
@@ -99,7 +109,7 @@ class xlvoVoter extends CachingActiveRecord
                 $this->last_access = new DateTime();
             }
 
-            return $this->last_access->format(DateTime::ATOM);
+            return $this->last_access->format('Y-m-d H:i:s');
         }
 
         return null;
