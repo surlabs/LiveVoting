@@ -174,11 +174,6 @@ class xlvoVotingGUI
                             . "_info_manual_" . $step)) . '</li>';
                 }, range(1, 4))) . '</ol>' : ''); // TODO: default.css not loaded
 
-            if (isset($_SESSION['onscreen_message'])) {
-                $message = $_SESSION['onscreen_message'];
-                self::dic()->ui()->mainTemplate()->setOnScreenMessage($message['type'], $message['msg']);
-                unset($_SESSION['onscreen_message']); // Limpiar el mensaje después de mostrarlo
-            }
             self::dic()->ui()->mainTemplate()->setContent($xlvoVotingTableGUI->getHTML() . $powerpoint_export);
         }
     }
@@ -251,8 +246,8 @@ class xlvoVotingGUI
             $xlvoVotingFormGUI = xlvoVotingFormGUI::get($this, $xlvoVoting);
             $xlvoVotingFormGUI->setValuesByPost();
             if ($xlvoVotingFormGUI->saveObject()) {
-                self::dic()->ui()->mainTemplate()->setOnScreenMessage('success', self::plugin()->translate("msg_success_voting_created"));
-
+                ilLiveVotingPlugin::sendSuccess(self::plugin()->translate('msg_success_voting_created'), true);
+                self::dic()->ctrl()->redirect($this, self::CMD_STANDARD);
             }
             self::dic()->ui()->mainTemplate()->setContent($xlvoVotingFormGUI->getHTML());
         }
@@ -360,8 +355,8 @@ class xlvoVotingGUI
             $xlvoVotingFormGUI = xlvoVotingFormGUI::get($this, $xlvoVoting);
             $xlvoVotingFormGUI->setValuesByPost();
             if ($xlvoVotingFormGUI->saveObject()) {
-                //ilLiveVotingPlugin::sendSuccess(self::plugin()->translate('msg_success_voting_updated'), true);
-                self::dic()->ui()->mainTemplate()->setOnScreenMessage('success', self::plugin()->translate("msg_success_voting_updated"));
+                ilLiveVotingPlugin::sendSuccess(self::plugin()->translate('msg_success_voting_updated'), true);
+                self::dic()->ctrl()->redirect($this, $cmd);
             }
             self::dic()->ui()->mainTemplate()->setContent($xlvoVotingFormGUI->getHTML());
         }
@@ -575,7 +570,7 @@ class xlvoVotingGUI
          */
         $xlvoVoting = xlvoVoting::find($_GET[self::IDENTIFIER]);
         $xlvoVoting->fullClone(true, true);
-        $_SESSION['onscreen_message'] = array('type' => 'success', 'msg' => self::plugin()->translate('voting_msg_duplicated'));
+        ilLiveVotingPlugin::sendSuccess(self::plugin()->translate('voting_msg_duplicated'), true);
         $this->cancel();
     }
 
@@ -667,7 +662,7 @@ class xlvoVotingGUI
                     $xlvoVoting->store();
                 }
             }
-            $_SESSION['onscreen_message'] = array('type' => 'success', 'msg' => self::plugin()->translate('voting_msg_sorting_saved'));
+            ilLiveVotingPlugin::sendSuccess(self::plugin()->translate('voting_msg_sorting_saved'), true);
             self::dic()->ctrl()->redirect($this, self::CMD_STANDARD);
         }
     }
