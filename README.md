@@ -4,9 +4,6 @@
 
 *This version is valid for ILIAS8 with PHP 7.4 and 8.0*
 
-
-**Some of this document's Features might not be implemented in this version for ILIAS8**
-
 *To report issue, please use Mantis (https://mantis.ilias.de/)*
 
 ## Features
