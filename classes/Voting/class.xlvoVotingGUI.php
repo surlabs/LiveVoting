@@ -143,7 +143,7 @@ class xlvoVotingGUI
             $b->setUrl(self::dic()->ctrl()->getLinkTarget($this, self::CMD_CONFIRM_RESET_ALL));
             self::dic()->toolbar()->addButtonInstance($b);
 
-            if ($_GET['import']) {
+            if (isset($_GET['import'])) {
                 $b = ilLinkButton::getInstance();
                 $b->setCaption($this->txt('export'), false);
                 $b->setUrl(self::dic()->ctrl()->getLinkTarget($this, self::CMD_EXPORT));
