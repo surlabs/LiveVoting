@@ -3,9 +3,6 @@
 namespace LiveVoting\Context;
 
 use ilException;
-use ilLiveVotingPlugin;
-use LiveVoting\Utils\LiveVotingTrait;
-use srag\DIC\LiveVoting\DICTrait;
 
 /**
  * Class xlvoILIAS
@@ -13,37 +10,33 @@ use srag\DIC\LiveVoting\DICTrait;
  * @package LiveVoting\Context
  * @author  nschaefli
  */
-class xlvoILIAS
+class xlvoILIAS extends \ILIAS
 {
-
-    use DICTrait;
-    use LiveVotingTrait;
-    const PLUGIN_CLASS_NAME = ilLiveVotingPlugin::class;
-
-
+    private \ilSetting $settings;
+    
     public function __construct()
     {
-
+        global $DIC;
+        parent::__construct();
+        $this->settings = $DIC->settings();
     }
-
-
+    
     /**
      * @param $key
      *
      * @return mixed
      */
-    public function getSetting($key)
+    public function getSetting(string $a_keyword, ?string $a_default_value = null) : ?string
     {
-        return self::dic()->settings()->get($key);
+        return $this->settings->get($a_keyword, $a_default_value);
     }
-
-
+    
     /**
      * wrapper for downward compability
      *
      * @throws ilException
      */
-    public function raiseError($a_msg, $a_err_obj)
+    public function raiseError(string $a_msg, int $a_err_obj) : void
     {
         throw new ilException($a_msg);
     }
