@@ -99,7 +99,8 @@ abstract class xlvoQuestionTypesGUI extends xlvoGUI
             default:
 
                 $cmd = null;
-                if (array_key_exists('cmd', $_POST)) {
+                $post_wrapper = self::dic()->dic()->http()->wrapper()->post();
+                if ($post_wrapper->has('cmd')) {
                     $cmd = $_POST['cmd'];
                     if (!empty($cmd)) {
                         if (is_array($cmd)) {
