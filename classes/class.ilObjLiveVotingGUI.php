@@ -104,9 +104,9 @@ class ilObjLiveVotingGUI extends ilObjectPluginGUI implements ilDesktopItemHandl
             }
         } else {
             // show info of parent
-            self::dic()->ui()->mainTemplate()->setTitle(ilObject::_lookupTitle(ilObject::_lookupObjId($this->ref_id)));
-            self::dic()->ui()->mainTemplate()->setTitleIcon(ilObject::_getIcon(ilObject::_lookupObjId($this->ref_id), 'big'), self::plugin()
-                ->translate('obj_' . ilObject::_lookupType($this->ref_id, true)));
+            self::dic()->ui()->mainTemplate()->setTitle(ilObject::_lookupTitle(ilObject::_lookupObjId($this->parent_id)));
+            self::dic()->ui()->mainTemplate()->setTitleIcon(ilObject::_getIcon(ilObject::_lookupObjId($this->parent_id)));
+
             $this->setLocator();
         }
     }
