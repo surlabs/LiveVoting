@@ -100,7 +100,7 @@ class xlvoResultsGUI extends xlvoGUI
      */
     private function buildRound()
     {
-        if ($_GET['round_id']) {
+        if (isset($_GET['round_id'])) {
             $this->round = xlvoRound::find($_GET['round_id']);
         } else {
             $this->round = xlvoRound::getLatestRound($this->obj_id);
