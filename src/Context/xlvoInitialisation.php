@@ -173,7 +173,7 @@ class xlvoInitialisation extends ilInitialisation
      * @param string $a_class
      * @param null   $a_source_file
      */
-    protected static function initGlobal(string $a_name, $a_class, ?string $a_source_file = null, ?bool $destroy_existing = false): void
+    protected static function initGlobal($a_name, $a_class, $a_source_file = NULL, ?bool $destroy_existing = false): void
     {
         global $DIC;
 
