@@ -54,28 +54,8 @@ trait BasePluginUninstallTrait
      */
     protected final function pluginUninstall(bool $remove_data = true) : bool
     {
-        $uninstall_removes_data = RemovePluginDataConfirmCtrl::getUninstallRemovesData();
-
-        if ($uninstall_removes_data === null) {
-            RemovePluginDataConfirmCtrl::saveParameterByClass();
-
-            self::dic()->ctrl()->redirectByClass([
-                ilUIPluginRouterGUI::class,
-                RemovePluginDataConfirmCtrl::class
-            ], RemovePluginDataConfirmCtrl::CMD_CONFIRM_REMOVE_DATA);
-
-            return false;
-        }
-
-        $uninstall_removes_data = boolval($uninstall_removes_data);
-
-        if ($remove_data) {
-            if ($uninstall_removes_data) {
-                $this->deleteData();
-            }
-
-            RemovePluginDataConfirmCtrl::removeUninstallRemovesData();
-        }
+        $this->deleteData();
+        RemovePluginDataConfirmCtrl::removeUninstallRemovesData();
 
         return true;
     }

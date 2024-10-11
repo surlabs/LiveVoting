@@ -89,11 +89,6 @@ class xlvoResultsGUI extends xlvoGUI
         $this->buildFilters($table);
         $table->initFilter();
         $table->buildData($this->obj_id, $this->round->getId());
-        if (isset($_SESSION['onscreen_message'])) {
-            $message = $_SESSION['onscreen_message'];
-            self::dic()->ui()->mainTemplate()->setOnScreenMessage($message['type'], $message['msg']);
-            unset($_SESSION['onscreen_message']); // Limpiar el mensaje después de mostrarlo
-        }
         self::dic()->ui()->mainTemplate()->setContent($table->getHTML());
     }
 
@@ -101,12 +96,11 @@ class xlvoResultsGUI extends xlvoGUI
     {
         $round_id = $this->http->request()->getQueryParams()[self::ROUND_ID] ?? null;
 
-        if ($round_id === null) {
+        if ($round_id != null) {
+            $this->round = xlvoRound::find($round_id);
+        } else {
             $this->round = xlvoRound::getLatestRound($this->obj_id);
-            return;
         }
-
-        $this->round = xlvoRound::find($round_id);
     }
 
 
@@ -158,7 +152,7 @@ class xlvoResultsGUI extends xlvoGUI
         $newRound->setObjId($this->obj_id);
         $newRound->store();
         self::dic()->ctrl()->setParameter($this, self::ROUND_ID, xlvoRound::getLatestRound($this->obj_id)->getId());
-        $_SESSION['onscreen_message'] = array('type' => 'success', 'msg' => self::plugin()->translate("common_new_round_created"));
+        self::dic()->ui()->mainTemplate()->setOnScreenMessage('success', self::plugin()->translate("common_new_round_created"), true);
         self::dic()->ctrl()->redirect($this, self::CMD_SHOW);
     }
 

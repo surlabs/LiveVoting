@@ -24,6 +24,8 @@ class xlvoDummyUser6 extends ilObjUser implements xlvoDummyUser
      */
     public function __construct()
     {
+        $this->prefs = array();
+        $this->prefs["language"] = "en";
     }
 
     /**

@@ -173,7 +173,7 @@ class xlvoInitialisation extends ilInitialisation
      * @param string $a_class
      * @param null   $a_source_file
      */
-    protected static function initGlobal($a_name, $a_class, $a_source_file = null): void
+    protected static function initGlobal($a_name, $a_class, $a_source_file = NULL, ?bool $destroy_existing = false): void
     {
         global $DIC;
 
@@ -181,7 +181,7 @@ class xlvoInitialisation extends ilInitialisation
             $DIC->offsetUnset($a_name);
         }
 
-        parent::initGlobal($a_name, $a_class, $a_source_file);
+        parent::initGlobal($a_name, $a_class, $a_source_file, $destroy_existing);
     }
 
 

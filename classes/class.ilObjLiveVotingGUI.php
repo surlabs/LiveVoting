@@ -104,9 +104,9 @@ class ilObjLiveVotingGUI extends ilObjectPluginGUI implements ilDesktopItemHandl
             }
         } else {
             // show info of parent
-            self::dic()->ui()->mainTemplate()->setTitle(ilObject::_lookupTitle(ilObject::_lookupObjId($this->ref_id)));
-            self::dic()->ui()->mainTemplate()->setTitleIcon(ilObject::_getIcon(ilObject::_lookupObjId($this->ref_id), 'big'), self::plugin()
-                ->translate('obj_' . ilObject::_lookupType($this->ref_id, true)));
+            self::dic()->ui()->mainTemplate()->setTitle(ilObject::_lookupTitle(ilObject::_lookupObjId($this->parent_id)));
+            self::dic()->ui()->mainTemplate()->setTitleIcon(ilObject::_getIcon(ilObject::_lookupObjId($this->parent_id)));
+
             $this->setLocator();
         }
     }
@@ -321,7 +321,7 @@ class ilObjLiveVotingGUI extends ilObjectPluginGUI implements ilDesktopItemHandl
     public function editProperties()
     {
         if (!ilObjLiveVotingAccess::hasWriteAccess()) {
-            ilLiveVotingPlugin::sendFailure(self::plugin()->translate('obj_permission_denied'), true);
+            self::dic()->ui()->mainTemplate()->setOnScreenMessage('failure', self::plugin()->translate("obj_permission_denied"), true);
             self::dic()->ctrl()->redirect($this, self::CMD_STANDARD);
         } else {
             self::dic()->tabs()->activateTab(self::TAB_EDIT);
@@ -369,7 +369,7 @@ class ilObjLiveVotingGUI extends ilObjectPluginGUI implements ilDesktopItemHandl
     {
 
         if (!ilObjLiveVotingAccess::hasWriteAccess()) {
-            ilLiveVotingPlugin::sendFailure(self::plugin()->translate('obj_permission_denied'), true);
+            self::dic()->ui()->mainTemplate()->setOnScreenMessage('failure', self::plugin()->translate("obj_permission_denied"), true);
         } else {
             $this->form = new ilPropertyFormGUI();
             $this->form->setTitle(self::plugin()->translate('obj_edit_properties'));
@@ -466,7 +466,7 @@ class ilObjLiveVotingGUI extends ilObjectPluginGUI implements ilDesktopItemHandl
     public function updateProperties()
     {
         if (!ilObjLiveVotingAccess::hasWriteAccess()) {
-            ilLiveVotingPlugin::sendFailure(self::plugin()->translate('obj_permission_denied_write'), true);
+            self::dic()->ui()->mainTemplate()->setOnScreenMessage('failure', self::plugin()->translate("obj_permission_denied"), true);
         } else {
             self::dic()->tabs()->activateTab(self::TAB_EDIT);
             $this->initPropertiesForm();
@@ -499,7 +499,7 @@ class ilObjLiveVotingGUI extends ilObjectPluginGUI implements ilDesktopItemHandl
                 $config->setShowAttendees($this->form->getInput(xlvoVotingConfig::F_SHOW_ATTENDEES));
 
                 $config->store();
-                ilLiveVotingPlugin::sendSuccess(self::plugin()->translate('obj_msg_properties_form_saved'), true);
+                self::dic()->ui()->mainTemplate()->setOnScreenMessage('success', self::plugin()->translate("obj_msg_properties_form_saved"), true);
                 self::dic()->ctrl()->redirect($this, self::CMD_EDIT);
             }
 
@@ -582,7 +582,7 @@ class ilObjLiveVotingGUI extends ilObjectPluginGUI implements ilDesktopItemHandl
     public function addToDeskObject(): void
     {
         ilDesktopItemGUI::addToDesktop();
-        ilLiveVotingPlugin::sendSuccess(self::dic()->language()->txt("added_to_desktop"));
+        self::dic()->ui()->mainTemplate()->setOnScreenMessage('success', self::dic()->language()->txt("added_to_desktop"), true);
     }
 
 
@@ -592,6 +592,6 @@ class ilObjLiveVotingGUI extends ilObjectPluginGUI implements ilDesktopItemHandl
     public function removeFromDeskObject(): void
     {
         ilDesktopItemGUI::removeFromDesktop();
-        ilLiveVotingPlugin::sendSuccess(self::dic()->language()->txt("removed_from_desktop"));
+        self::dic()->ui()->mainTemplate()->setOnScreenMessage('success', self::dic()->language()->txt("removed_from_desktop"), true);
     }
 }

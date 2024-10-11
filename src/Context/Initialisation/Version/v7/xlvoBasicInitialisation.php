@@ -157,11 +157,20 @@ class xlvoBasicInitialisation
         $this->initFilesystem();
         $this->initResourceStorage();
         $this->initGlobalScreen($GLOBALS["DIC"]);
+        $this->initRbacAdmin();
         $this->initTemplate();
         $this->initTabs();
         $this->initNavigationHistory();
         $this->initHelp();
         xlvoInitialisation::initUIFramework(self::dic()->dic());
+    }
+
+    /**
+     * Initialize a fake rbacadmin service to satisfy the help system module
+     */
+    private function initRbacAdmin(): void
+    {
+        $this->makeGlobal('rbacadmin', new \ilRbacAdmin());
     }
 
     /**
