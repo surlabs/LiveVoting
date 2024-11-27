@@ -1,5 +1,8 @@
 # LiveVoting
 
+**This version will be deprecated soon. Please download the latest version from the new repository:  
+https://github.com/surlabs/LiveVotingRW**
+
 **This is a fork created by SURLABS of the FLUXLABS' LiveVoting Plugin for ILIAS**
 
 *This version is valid for ILIAS8 with PHP 7.4 and 8.0*
